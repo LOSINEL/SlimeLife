@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Hand
   - Ground
+  - Item
+  - Tool
   layers:
   - Default
   - TransparentFX
