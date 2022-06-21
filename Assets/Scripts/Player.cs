@@ -4,26 +4,38 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    const int soundSize = 2;
+    const int playerSoundSize = 3;
+    const int weaponAttackSoundSize = 4;
     const float doubleInput = 0.7071f;
     public static Player instance;
-    public float mvspd_ = 2f, mvspd = 2f;
-    public float mvsnd = 1f;
+    public float mvspd_ = 2.5f, mvspd = 2.5f;
+    public float mvsnd = 1f, atkspd = 1f;
     public int jumpPower = 100;
+    float attackAnimTime = 0.33f;
     bool move_able = true;
     bool jump_able = true;
     bool mvsnd_able = true;
+    bool attack_able = true;
     [SerializeField] bool isMoving = false;
     [SerializeField] bool grounded = true;
+    [SerializeField] bool isAttacking = false;
+    GameObject weapon;
     GameObject mainCamera;
-    GameObject hand;
     Rigidbody rigid;
     AudioSource audioSource;
-    [SerializeField] AudioClip[] audioClip = new AudioClip[soundSize];
+    [SerializeField]AudioClip[] playerAudioClip = new AudioClip[playerSoundSize];
+    [SerializeField]AudioClip[] weaponAudioClip = new AudioClip[weaponAttackSoundSize];
+    [SerializeField] int damage = 1;
     public bool Grounded { set { grounded = value; } }
-    enum AudioClipName
+    public bool IsAttacking { get { return isAttacking; } }
+    public int Damage { get { return damage; } }
+    public enum AudioClipName
     {
-        move, jump
+        Move, Jump, WeaponSwing
+    }
+    public enum WeaponAttackClipName
+    {
+        AxeChop, PickAxeChop, ScytheChop, ShovelChop
     }
     void Awake()
     {
@@ -32,11 +44,16 @@ public class Player : MonoBehaviour
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        hand = GameObject.FindGameObjectWithTag("Hand");
+        weapon = GameObject.Find("Weapon");
         rigid = gameObject.GetComponent<Rigidbody>();
         audioSource = gameObject.GetComponent<AudioSource>();
-        audioClip[(int)AudioClipName.move] = Resources.Load<AudioClip>("SoundEffect/Player/Slime_Move");
-        audioClip[(int)AudioClipName.jump] = Resources.Load<AudioClip>("SoundEffect/Player/Slime_Jump");
+        playerAudioClip[(int)AudioClipName.Move] = Resources.Load<AudioClip>("SoundEffect/Player/Slime_Move");
+        playerAudioClip[(int)AudioClipName.Jump] = Resources.Load<AudioClip>("SoundEffect/Player/Slime_Jump");
+        playerAudioClip[(int)AudioClipName.WeaponSwing] = Resources.Load<AudioClip>("SoundEffect/Weapon/ETC/WeaponSwing");
+        weaponAudioClip[(int)WeaponAttackClipName.AxeChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/Axe/Axe_Chop");
+        weaponAudioClip[(int)WeaponAttackClipName.PickAxeChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/PickAxe/PickAxe_Chop");
+        weaponAudioClip[(int)WeaponAttackClipName.ScytheChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/Scythe/Scythe_Chop");
+        weaponAudioClip[(int)WeaponAttackClipName.ShovelChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/Shovel/Shovel_Chop");
     }
     void Update()
     {
@@ -55,16 +72,49 @@ public class Player : MonoBehaviour
             {
                 mvsnd_able = false;
                 // 플레이어 이동 사운드 재생
-                audioSource.clip = audioClip[(int)AudioClipName.move];
+                audioSource.clip = playerAudioClip[(int)AudioClipName.Move];
                 audioSource.Play();
                 StartCoroutine(MoveSound());
             }
             isMoving = false;
         }
+        if(attack_able)
+        {
+            if (Input.GetKey(KeyCode.J) && attack_able)
+            {
+                isAttacking = true;
+                attack_able = false;
+                audioSource.clip = playerAudioClip[(int)AudioClipName.WeaponSwing];
+                audioSource.Play();
+                weapon.GetComponent<Animator>().SetTrigger("Attack");
+                StartCoroutine(AttackCoolTime());
+                StartCoroutine(Attack());
+            }
+        }
     }
     void LateUpdate()
     {
         mainCamera.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 10.5f, gameObject.transform.position.z - 8.5f);
+    }
+    public void PlayAttackSound(int num)
+    {
+        audioSource.clip = weaponAudioClip[num];
+        audioSource.Play();
+    }
+    public void PlaySound(int num)
+    {
+        audioSource.clip = playerAudioClip[num];
+        audioSource.Play();
+    }
+    IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(attackAnimTime);
+        isAttacking = false;
+    }
+    IEnumerator AttackCoolTime()
+    {
+        yield return new WaitForSeconds(atkspd);
+        attack_able = true;
     }
     IEnumerator MoveSound()
     {
@@ -90,7 +140,7 @@ public class Player : MonoBehaviour
         {
             rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
             // 플레이어 점프 사운드 재생
-            audioSource.clip = audioClip[(int)AudioClipName.jump];
+            audioSource.clip = playerAudioClip[(int)AudioClipName.Jump];
             audioSource.Play();
             grounded = false;
         }

@@ -7,6 +7,7 @@ TagManager:
   - Hand
   - Ground
   - Item
+  - Gatherable
   - Tool
   layers:
   - Default
