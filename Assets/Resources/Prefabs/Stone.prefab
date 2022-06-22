@@ -111,4 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf4b88e4a0da77429e0e81611686a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nowHp: 10
   dropItem: {fileID: 3991231168951902598, guid: 5a3d73fc297230b4293fa037f6857ebc, type: 3}
+  gatherableType: 1

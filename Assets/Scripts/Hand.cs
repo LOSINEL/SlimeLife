@@ -22,18 +22,22 @@ public class Hand : MonoBehaviour
         {
             minDistance = distance_arr[0];
             minDistanceObject = colObject.FirstOrDefault(x => x.Value == minDistance).Key;
-            Debug.Log(minDistanceObject.name);
+            Debug.Log("mindis : "+minDistanceObject.name);
             return;
+        }
+        else
+        {
+            minDistance = distance_arr[0];
         }
         for (int i = 0; i < colObject.Count - 1; i++)
         {
-            if (distance_arr[i] < distance_arr[i + 1])
-                minDistance = distance_arr[i];
-            else
+            if (!(minDistance < distance_arr[i + 1]))
+            {
                 minDistance = distance_arr[i + 1];
+            }
         }
         minDistanceObject = colObject.FirstOrDefault(x => x.Value == minDistance).Key;
-        Debug.Log(minDistanceObject.name);
+        Debug.Log("mindis : "+minDistanceObject.name);
     }
     void OnTriggerStay(Collider other)
     {

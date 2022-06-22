@@ -28,7 +28,6 @@ public class Gatherable : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(nowHp);
         if(attacked)
         {
             gameObject.transform.position = basePos + new Vector3(Random.Range(-1 * vibrateRange, vibrateRange), 0, Random.Range(-1 * vibrateRange, vibrateRange));
@@ -57,7 +56,7 @@ public class Gatherable : MonoBehaviour
     {
         if (other.tag.Equals("Tool") && Player.instance.IsAttacking)
         {
-            if (gatherableType == other.GetComponent<Weapon>().weaponType)
+            if (gatherableType == other.GetComponent<Tool>().toolType)
             {
                 attacked = true;
                 nowHp -= Player.instance.Damage;
