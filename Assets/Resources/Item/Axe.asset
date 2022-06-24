@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: "\uB3C4\uB07C"
   itemType: 1
   itemImage: {fileID: 21300000, guid: 721fc5075ab60cf46813e8046b46a02c, type: 3}
-  itemPrefab: {fileID: 5877083285060104647, guid: 4c6dad318ef6a394c9ace62c5fd9f862, type: 3}
+  itemPrefab: {fileID: 7710175464821097271, guid: 25d525bed6b0e7e47a1677cc3cdeed63, type: 3}

@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public float mvspd_ = 2.5f, mvspd = 2.5f;
     public float mvsnd = 1f, atkspd = 1f;
     public int jumpPower = 100;
-    float attackAnimTime = 0.33f;
+    float attackAnimTime = 0.3f;
     bool move_able = true;
     bool jump_able = true;
     bool mvsnd_able = true;
@@ -84,6 +84,7 @@ public class Player : MonoBehaviour
             {
                 isAttacking = true;
                 attack_able = false;
+                move_able = false;
                 audioSource.clip = playerAudioClip[(int)AudioClipName.WeaponSwing];
                 audioSource.Play();
                 weapon.GetComponent<Animator>().SetTrigger("Attack");
@@ -110,6 +111,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(attackAnimTime);
         isAttacking = false;
+        move_able = true;
     }
     IEnumerator AttackCoolTime()
     {
