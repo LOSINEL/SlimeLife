@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Rendering;
 
 public class Gatherable : MonoBehaviour
 {
@@ -16,7 +15,8 @@ public class Gatherable : MonoBehaviour
     public int gatherableType = 0;
     public GameObject hpBarPrefab;
     public Vector3 hpBarOffset = new Vector3(0, 1f, 0);
-    Canvas uiCanvas;
+    GameObject hpBar;
+    Canvas hpCanvas;
     Image hpbarImage;
     enum GatherableType
     {
@@ -30,7 +30,6 @@ public class Gatherable : MonoBehaviour
     {
         SetHpBar();
         basePos = gameObject.transform.position;
-        hpBarPrefab.GetComponent<Image>().fillAmount = 0.2f;
     }
     void Update()
     {
@@ -39,23 +38,31 @@ public class Gatherable : MonoBehaviour
             gameObject.transform.position = basePos + new Vector3(Random.Range(-1 * vibrateRange, vibrateRange), 0, Random.Range(-1 * vibrateRange, vibrateRange));
             StartCoroutine(Vibrate());
         }
-        if (nowHp <= 0 && gameObject.GetComponent<Renderer>().material.color.a > 0)
+        if (nowHp <= 0)
         {
-            gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, gameObject.GetComponent<Renderer>().material.color.a - Time.deltaTime);
-            if (gameObject.GetComponent<Renderer>().material.color.a <= 0)
+            switch(gatherableType)
             {
-                for (int i = 0; i < dropNum; i++)
-                {
-                    Instantiate(dropItem, new Vector3(gameObject.transform.position.x + Random.Range(-1 * dropRange, dropRange), gameObject.transform.position.y + dropRange, gameObject.transform.position.z + Random.Range(-1 * dropRange, dropRange)), Quaternion.identity);
-                }
-                Destroy(this.gameObject);
+                case (int)GatherableType.Tree:
+                    break;
+                case (int)GatherableType.Mineral:
+                    break;
+                case (int)GatherableType.Plant:
+                    break;
+                case (int)GatherableType.Dirt:
+                    break;
             }
+            for (int i = 0; i < dropNum; i++)
+            {
+                Instantiate(dropItem, new Vector3(gameObject.transform.position.x + Random.Range(-1 * dropRange, dropRange), gameObject.transform.position.y + dropRange, gameObject.transform.position.z + Random.Range(-1 * dropRange, dropRange)), Quaternion.identity);
+            }
+            Destroy(hpBar);
+            Destroy(this.gameObject);
         }
     }
     void SetHpBar()
     {
-        uiCanvas = GameObject.Find("UI_Canvas").GetComponent<Canvas>();
-        GameObject hpBar = Instantiate<GameObject>(hpBarPrefab, uiCanvas.transform);
+        hpCanvas = GameObject.Find("HP_Canvas").GetComponent<Canvas>();
+        hpBar = Instantiate<GameObject>(hpBarPrefab, hpCanvas.transform);
         hpbarImage = hpBar.GetComponentsInChildren<Image>()[1];
 
         var _hpbar = hpBar.GetComponent<HpBar>();
@@ -66,7 +73,7 @@ public class Gatherable : MonoBehaviour
     }
     void RefreshHpBar()
     {
-        hpBarPrefab.GetComponent<HpBar>().GetComponentInChildren<Text>().text = nowHp.ToString() + "/" + maxHp.ToString();
+        hpBar.GetComponent<HpBar>().GetComponentInChildren<Text>().text = nowHp.ToString() + "/" + maxHp.ToString();
         hpbarImage.fillAmount = (float)nowHp / maxHp;
     }
     IEnumerator Vibrate()
@@ -83,7 +90,8 @@ public class Gatherable : MonoBehaviour
             {
                 attacked = true;
                 nowHp -= Player.instance.Damage;
-                Player.instance.PlayAttackSound(gatherableType);
+                if (nowHp < 0) nowHp = 0;
+                SoundManager.instance.PlayerSoundPlay(gatherableType, false);
                 RefreshHpBar();
             }
         }

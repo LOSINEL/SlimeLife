@@ -6,7 +6,7 @@ public class Feet : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Ground"))
+        if(other.tag.Equals("Ground"))
         {
             Player.instance.Grounded = true;
         }

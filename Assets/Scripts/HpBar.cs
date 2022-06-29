@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HpBar : MonoBehaviour
 {
-    Camera uiCamera;
-    Canvas uiCanvas;
+    Camera hpCamera;
+    Canvas hpCanvas;
     RectTransform rectParent;
     RectTransform rectHp;
     [HideInInspector] public Vector3 offset = Vector3.zero;
@@ -14,9 +13,9 @@ public class HpBar : MonoBehaviour
 
     void Start()
     {
-        uiCanvas = GetComponentInParent<Canvas>();
-        uiCamera = uiCanvas.worldCamera;
-        rectParent = uiCanvas.GetComponent<RectTransform>();
+        hpCanvas = GetComponentInParent<Canvas>();
+        hpCamera = hpCanvas.worldCamera;
+        rectParent = hpCanvas.GetComponent<RectTransform>();
         rectHp = this.gameObject.GetComponent<RectTransform>();
     }
     void LateUpdate()
@@ -27,7 +26,7 @@ public class HpBar : MonoBehaviour
             screenPos *= -1f;
         }
         var localPos = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectParent, screenPos, uiCamera, out localPos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectParent, screenPos, hpCamera, out localPos);
         rectHp.localPosition = localPos;
     }
 }

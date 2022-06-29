@@ -28,5 +28,7 @@ public class ButtonManager : MonoBehaviour
         grayCanvas.SetActive(!optionCanvas.activeSelf);
         optionCanvas.SetActive(!optionCanvas.activeSelf);
         isOptionCanvasOpen = optionCanvas.activeSelf;
+        Time.timeScale = (optionCanvas.activeSelf) ? 0f : 1f;
+        Player.instance.ActiveAll(!optionCanvas.activeSelf);
     }
 }
