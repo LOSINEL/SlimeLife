@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: "\uACE1\uAD2D\uC774"
   itemType: 1
   itemImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  itemPrefab: {fileID: 0}
+  itemPrefab: {fileID: 2317982143941417521, guid: c94b4dba70e4c8445b15921e676d2ba3, type: 3}
   itemInfo: "\uAD11\uBB3C\uC744 \uCE98 \uC218 \uC788\uB294 \uACE1\uAD2D\uC774\uB2E4."

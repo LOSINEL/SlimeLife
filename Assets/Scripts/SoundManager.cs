@@ -13,7 +13,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioClip[] playerSound = new AudioClip[playerSoundSize];
     [SerializeField] AudioClip[] weaponSound = new AudioClip[weaponSoundSize];
     Text masterVolumeText, bgmVolumeText, sfxVolumeText;
-    bool refreshTime = true;
     public enum PlayerSoundName
     {
         Move, Jump, WeaponSwing
@@ -32,11 +31,13 @@ public class SoundManager : MonoBehaviour
         bgmVolume = GameObject.Find("BgmVolume").GetComponent<Slider>();
         sfxVolume = GameObject.Find("SfxVolume").GetComponent<Slider>();
 
+        masterVolume.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+        bgmVolume.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+        sfxVolume.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+
         bgmPlayer = GameObject.Find("BgmPlayer").GetComponent<AudioSource>();
         sfxPlayer = GameObject.Find("SfxPlayer").GetComponent<AudioSource>();
 
-        bgmPlayer.volume = masterVolume.value * bgmVolume.value;
-        sfxPlayer.volume = masterVolume.value * sfxVolume.value;
         playerSound[(int)PlayerSoundName.Move] = Resources.Load<AudioClip>("SoundEffect/Player/Slime_Move");
         playerSound[(int)PlayerSoundName.Jump] = Resources.Load<AudioClip>("SoundEffect/Player/Slime_Jump");
         playerSound[(int)PlayerSoundName.WeaponSwing] = Resources.Load<AudioClip>("SoundEffect/Weapon/ETC/WeaponSwing");
@@ -44,6 +45,16 @@ public class SoundManager : MonoBehaviour
         weaponSound[(int)WeaponSoundName.PickAxeChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/PickAxe/PickAxe_Chop");
         weaponSound[(int)WeaponSoundName.ScytheChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/Scythe/Scythe_Chop");
         weaponSound[(int)WeaponSoundName.ShovelChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/Shovel/Shovel_Chop");
+
+        ValueChangeCheck();
+    }
+    public void ValueChangeCheck()
+    {
+        bgmPlayer.volume = masterVolume.value * bgmVolume.value;
+        sfxPlayer.volume = masterVolume.value * sfxVolume.value;
+        masterVolume.GetComponentsInChildren<Text>()[1].text = ((int)(masterVolume.value * 100)).ToString() + "%";
+        bgmVolume.GetComponentsInChildren<Text>()[1].text = ((int)(bgmVolume.value * 100)).ToString() + "%";
+        sfxVolume.GetComponentsInChildren<Text>()[1].text = ((int)(sfxVolume.value * 100)).ToString() + "%";
     }
     public void PlayerSoundPlay(int num, bool isPlayer)
     {
@@ -54,27 +65,5 @@ public class SoundManager : MonoBehaviour
         {
             sfxPlayer.PlayOneShot(weaponSound[num]);
         }
-    }
-    void Update()
-    {
-        if (refreshTime)
-        {
-            refreshTime = false;
-            StartCoroutine(RefreshVolume());
-        }
-        if(ButtonManager.instance.IsOptionCanvasOpen)
-        {
-            masterVolume.GetComponentsInChildren<Text>()[1].text = ((int)(masterVolume.value * 100)).ToString() + "%";
-            bgmVolume.GetComponentsInChildren<Text>()[1].text = ((int)(bgmVolume.value * 100)).ToString() + "%";
-            sfxVolume.GetComponentsInChildren<Text>()[1].text = ((int)(sfxVolume.value * 100)).ToString() + "%";
-        }
-
-    }
-    IEnumerator RefreshVolume()
-    {
-        yield return new WaitForSeconds(0.12f);
-        bgmPlayer.volume = masterVolume.value * bgmVolume.value;
-        sfxPlayer.volume = masterVolume.value * sfxVolume.value;
-        refreshTime = true;
     }
 }

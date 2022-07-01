@@ -13,14 +13,11 @@ public class Player : MonoBehaviour
     bool jump_able = true;
     bool mvsnd_able = true;
     bool attack_able = true;
-    [SerializeField] bool isMoving = false;
-    [SerializeField] bool grounded = false;
-    [SerializeField] bool isAttacking = false;
+    [SerializeField] bool isMoving = false, grounded = false, isAttacking = false;
     [SerializeField] float gravityScale = 6f;
-    GameObject weapon;
-    GameObject mainCamera;
-    Rigidbody rigid;
+    [SerializeField] GameObject weapon, mainCamera;
     [SerializeField] int damage = 1;
+    Rigidbody rigid;
     public bool Grounded { set { grounded = value; } }
     public bool IsAttacking { get { return isAttacking; } }
     public int Damage { get { return damage; } }
@@ -30,8 +27,6 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        weapon = GameObject.Find("Weapon");
         rigid = gameObject.GetComponent<Rigidbody>();
     }
     void Update()
@@ -60,6 +55,7 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.J) && attack_able)
             {
+                weapon.SetActive(true);
                 isAttacking = true;
                 attack_able = false;
                 move_able = false;
@@ -82,6 +78,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(attackAnimTime);
         isAttacking = false;
         move_able = true;
+        weapon.SetActive(false);
     }
     IEnumerator AttackCoolTime()
     {

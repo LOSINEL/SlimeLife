@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 public class ButtonManager : MonoBehaviour
 {
     public static ButtonManager instance;
-    GameObject optionCanvas;
-    GameObject grayCanvas;
+    public GameObject optionCanvas, grayCanvas;
     bool isOptionCanvasOpen = false;
     public bool IsOptionCanvasOpen { get { return isOptionCanvasOpen; } }
     void Awake()
@@ -18,8 +17,6 @@ public class ButtonManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "InGame")
         {
-            optionCanvas = GameObject.Find("Option_Canvas");
-            grayCanvas = GameObject.Find("Gray_Canvas");
             SetOptionCanvas();
         }
     }

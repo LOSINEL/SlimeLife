@@ -16,4 +16,4 @@ MonoBehaviour:
   itemType: 3
   itemImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 1493958779012120596, guid: b9de24523a11d714db3851b5f0f9d527, type: 3}
-  itemInfo: "\uD3C9\uBC94\uD55C \uB098\uBB47\uAC00\uC9C0\uB2E4."
+  itemInfo: "\uB098\uBB47\uAC00\uC9C0\uB2E4."
