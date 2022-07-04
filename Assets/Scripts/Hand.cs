@@ -11,9 +11,19 @@ public class Hand : MonoBehaviour
     public Dictionary<GameObject, float> colObject = new Dictionary<GameObject, float>();
     float[] distance_arr;
     float minDistance;
+    float npcScriptTime = 0.25f;
     string minDistanceObjectName = "";
     public GameObject pushButton;
     public GameObject itemInfoText;
+    public GameObject npcCanvas;
+    string[] npcScript;
+    bool npcScriptTimeEnd = false;
+    int npcScriptCheckNum = 0;
+    int npcScriptType = 0;
+    int npcScriptNum = 0;
+
+    public float NpcScriptTime { get { return NpcScriptTime; } set { npcScriptTime = value; } }
+
     void Awake()
     {
         instance = this;
@@ -60,21 +70,75 @@ public class Hand : MonoBehaviour
                 minDistanceObjectName = minDistanceObject.name;
             }
         }
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !npcCanvas.activeSelf)
         {
-            Debug.Log(minDistanceObject.GetComponent<ItemPickUp>().item.itemName + "∏¶ »πµÊ«ﬂ¥Ÿ");
-            colObject.Remove(minDistanceObject);
-            Destroy(minDistanceObject);
+            if (minDistanceObject.tag.Equals("Item"))
+            {
+                Debug.Log(minDistanceObject.GetComponent<ItemPickUp>().item.itemName + "∏¶ »πµÊ«ﬂ¥Ÿ");
+                colObject.Remove(minDistanceObject);
+                Destroy(minDistanceObject);
+            }
+            if (minDistanceObject.tag.Equals("Npc"))
+            {
+                npcCanvas.SetActive(true);
+                npcCanvas.GetComponentsInChildren<Image>()[1].sprite = minDistanceObject.GetComponent<NpcTouch>().npc.npcImage;
+                npcCanvas.GetComponentsInChildren<Text>()[0].text = minDistanceObject.GetComponent<NpcTouch>().npc.npcName;
+                npcCanvas.GetComponentsInChildren<Text>()[1].text = "";
+                npcScript = minDistanceObject.GetComponent<NpcTouch>().npc.npcScript[npcScriptType].script[npcScriptNum].Split(' ');
+                Player.instance.ActiveAll(false);
+            }
         }
+        if(npcCanvas.activeSelf)
+        {
+            if (!npcScriptTimeEnd)
+            {
+                if (npcScriptCheckNum >= npcScript.Length)
+                {
+                    if (Input.GetKeyUp(KeyCode.Q))
+                    {
+                        npcScriptCheckNum = 0;
+                        npcScriptType = 0;
+                        npcScriptNum = 0;
+                        npcCanvas.SetActive(false);
+                        Player.instance.ActiveAll(true);
+                    }
+                    if (Input.GetKeyUp(KeyCode.E) && npcScriptNum < minDistanceObject.GetComponent<NpcTouch>().npc.npcScript[npcScriptType].script.Length - 1)
+                    {
+                        npcCanvas.GetComponentsInChildren<Text>()[1].text = "";
+                        npcScript = minDistanceObject.GetComponent<NpcTouch>().npc.npcScript[npcScriptType].script[++npcScriptNum].Split(' ');
+                        npcScriptCheckNum = 0;
+                    }
+                    return;
+                }
+                else
+                {
+                    npcCanvas.GetComponentsInChildren<Text>()[1].text += npcScript[npcScriptCheckNum++] + " ";
+                }
+                npcScriptTimeEnd = true;
+                StartCoroutine(NpcScriptText());
+            }
+        }
+    }
+    IEnumerator NpcScriptText()
+    {
+        yield return new WaitForSeconds(npcScriptTime);
+        npcScriptTimeEnd = false;
     }
     void RefreshPushButton()
     {
         pushButton.SetActive(true);
-        itemInfoText.GetComponent<Text>().text = minDistanceObject.GetComponent<ItemPickUp>().item.itemName + "\n" + minDistanceObject.GetComponent<ItemPickUp>().item.itemInfo;
+        if (minDistanceObject.tag.Equals("Item"))
+        {
+            itemInfoText.GetComponent<Text>().text = minDistanceObject.GetComponent<ItemPickUp>().item.itemName + "\n" + minDistanceObject.GetComponent<ItemPickUp>().item.itemInfo;
+        }
+        else
+        {
+            itemInfoText.GetComponent<Text>().text = minDistanceObject.GetComponent<NpcTouch>().npc.npcName + "\n" + minDistanceObject.GetComponent<NpcTouch>().npc.npcInfo;
+        }
     }
     void OnTriggerStay(Collider other)
     {
-        if (other.tag.Equals("Item"))
+        if (other.tag.Equals("Item")||other.tag.Equals("Npc"))
         {
             if (colObject.ContainsKey(other.gameObject))
             {
@@ -86,7 +150,7 @@ public class Hand : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if(other.tag.Equals("Item"))
+        if (other.tag.Equals("Item") || other.tag.Equals("Npc"))
         {
             colObject.Remove(other.gameObject);
         }

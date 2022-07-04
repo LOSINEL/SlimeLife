@@ -13,13 +13,6 @@ public class ButtonManager : MonoBehaviour
     {
         instance = this;
     }
-    void Start()
-    {
-        if (SceneManager.GetActiveScene().name == "InGame")
-        {
-            SetOptionCanvas();
-        }
-    }
     public void SetOptionCanvas()
     {
         grayCanvas.SetActive(!optionCanvas.activeSelf);
@@ -27,5 +20,11 @@ public class ButtonManager : MonoBehaviour
         isOptionCanvasOpen = optionCanvas.activeSelf;
         Time.timeScale = (optionCanvas.activeSelf) ? 0f : 1f;
         Player.instance.ActiveAll(!optionCanvas.activeSelf);
+    }
+
+    public void CloseNpcCanvas()
+    {
+        Hand.instance.npcCanvas.SetActive(false);
+        Player.instance.ActiveAll(true);
     }
 }

@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour
     const int playerSoundSize = 3;
     const int weaponSoundSize = 4;
     public static SoundManager instance;
-    Slider masterVolume, bgmVolume, sfxVolume;
+    [SerializeField] Slider masterVolume, bgmVolume, sfxVolume;
     AudioSource bgmPlayer, sfxPlayer;
     [SerializeField] AudioClip[] playerSound = new AudioClip[playerSoundSize];
     [SerializeField] AudioClip[] weaponSound = new AudioClip[weaponSoundSize];
@@ -27,10 +27,6 @@ public class SoundManager : MonoBehaviour
     }
     void Start()
     {
-        masterVolume = GameObject.Find("MasterVolume").GetComponent<Slider>();
-        bgmVolume = GameObject.Find("BgmVolume").GetComponent<Slider>();
-        sfxVolume = GameObject.Find("SfxVolume").GetComponent<Slider>();
-
         masterVolume.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         bgmVolume.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         sfxVolume.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
@@ -45,8 +41,6 @@ public class SoundManager : MonoBehaviour
         weaponSound[(int)WeaponSoundName.PickAxeChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/PickAxe/PickAxe_Chop");
         weaponSound[(int)WeaponSoundName.ScytheChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/Scythe/Scythe_Chop");
         weaponSound[(int)WeaponSoundName.ShovelChop] = Resources.Load<AudioClip>("SoundEffect/Weapon/Shovel/Shovel_Chop");
-
-        ValueChangeCheck();
     }
     public void ValueChangeCheck()
     {

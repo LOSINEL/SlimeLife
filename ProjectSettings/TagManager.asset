@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Gatherable
   - Tool
+  - Npc
   layers:
   - Default
   - TransparentFX

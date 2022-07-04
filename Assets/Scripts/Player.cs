@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public static Player instance;
     public float mvspd_ = 2.5f, mvspd = 2.5f;
     public float mvsnd = 1f, atkspd = 1f;
-    public int jumpPower = 45;
+    public int jumpPower = 10;
     float attackAnimTime = 0.3f;
     bool move_able = true;
     bool jump_able = true;
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
     {
         if (!isMoving && grounded) rigid.velocity = Vector3.zero;
         isMoving = false;
-        if (!grounded) rigid.velocity += new Vector3(0, -1, 0) * gravityScale * Time.deltaTime;
+        rigid.velocity += new Vector3(0, -1, 0) * gravityScale;
         mainCamera.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 10.5f, gameObject.transform.position.z - 8.5f);
     }
     IEnumerator Attack()
@@ -122,28 +122,28 @@ public class Player : MonoBehaviour
         // 8방향 이동
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
         {
-            rigid.velocity = new Vector3(-1, 0, 1) * mvspd;
+            rigid.velocity = new Vector3(-1, 0, 1).normalized * mvspd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, -45, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
         {
-            rigid.velocity = new Vector3(1, 0, 1) * mvspd;
+            rigid.velocity = new Vector3(1, 0, 1).normalized * mvspd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 45, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
         {
-            rigid.velocity = new Vector3(-1, 0, -1) * mvspd;
+            rigid.velocity = new Vector3(-1, 0, -1).normalized * mvspd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, -135, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
         {
-            rigid.velocity = new Vector3(1, 0, -1) * mvspd;
+            rigid.velocity = new Vector3(1, 0, -1).normalized * mvspd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 135, 0));
             isMoving = true;
             return;

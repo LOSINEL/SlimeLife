@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class SightAngle : MonoBehaviour
 {
-    Slider sightAngle;
+    public Slider sightAngle;
     public Camera mainCamera;
     void Start()
     {
-        sightAngle = GameObject.Find("SightAngle").GetComponent<Slider>();
         sightAngle.value = 0.5f;
         sightAngle.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
     }
