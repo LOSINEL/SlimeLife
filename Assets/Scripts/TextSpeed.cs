@@ -13,7 +13,8 @@ public class TextSpeed : MonoBehaviour
     }
     public void ValueChangeCheck()
     {
-        Hand.instance.NpcScriptTime = textSpeed.value * 0.5f;
-        textSpeed.GetComponentsInChildren<Text>()[1].text = (Mathf.Round((textSpeed.value) * 50) * 0.01f).ToString() + "s";
+        NpcScriptManager.instance.NpcScriptTime = textSpeed.value * 0.2f;
+        textSpeed.GetComponentsInChildren<Text>()[1].text = (Mathf.Round((textSpeed.value) * 20) * 0.01f).ToString() + "s";
+        if (textSpeed.value <= 0.001f) textSpeed.value = 0.001f;
     }
 }

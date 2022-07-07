@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 1285095879323032384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.16, y: 0.47, z: 1.75}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.24, y: 0.24, z: 0.24}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -113,7 +113,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nowHp: 10
   maxHp: 10
+  dropNum: 3
   dropItem: {fileID: 1493958779012120596, guid: b9de24523a11d714db3851b5f0f9d527, type: 3}
   gatherableType: 0
   hpBarPrefab: {fileID: 8948261118332420198, guid: 0281a9920dadf58438801c7b6bac7465, type: 3}
+  readyPrefab: {fileID: 8435385665272881448, guid: 0347d97cbd313044c9cceb3847e3bb1a, type: 3}
   hpBarOffset: {x: 0, y: 1, z: 0}

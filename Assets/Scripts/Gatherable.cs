@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Gatherable : MonoBehaviour
 {
-    public int nowHp = 10, maxHp = 10;
-    int dropNum = 3;
+    public int nowHp = 10, maxHp = 10, dropNum = 3;
     public GameObject dropItem;
     float vibrateRange = 0.1f;
     float vibrateTime = 0.25f;
@@ -14,10 +13,14 @@ public class Gatherable : MonoBehaviour
     bool attacked = false;
     public int gatherableType = 0;
     public GameObject hpBarPrefab;
+    public GameObject readyPrefab;
     public Vector3 hpBarOffset = new Vector3(0, 1f, 0);
+    float growTime = 0.05f;
     GameObject hpBar;
     Canvas hpCanvas;
     Image hpbarImage;
+    bool needGrow = true;
+    bool hitAble = false;
     enum GatherableType
     {
         Tree, // 도끼로만 데미지를 입음
@@ -33,7 +36,13 @@ public class Gatherable : MonoBehaviour
     }
     void Update()
     {
-        if(attacked)
+        if (needGrow && gameObject.transform.localScale.x < 1f)
+        {
+            needGrow = false;
+            StartCoroutine(GrowObject());
+        }
+        if (gameObject.transform.localScale.x >= 1f) hitAble = true;
+        if (attacked)
         {
             gameObject.transform.position = basePos + new Vector3(Random.Range(-1 * vibrateRange, vibrateRange), 0, Random.Range(-1 * vibrateRange, vibrateRange));
             StartCoroutine(Vibrate());
@@ -55,9 +64,16 @@ public class Gatherable : MonoBehaviour
             {
                 Instantiate(dropItem, new Vector3(gameObject.transform.position.x + Random.Range(-1 * dropRange, dropRange), gameObject.transform.position.y + dropRange, gameObject.transform.position.z + Random.Range(-1 * dropRange, dropRange)), Quaternion.identity);
             }
-            Destroy(hpBar);
-            Destroy(this.gameObject);
+            Instantiate(readyPrefab, gameObject.transform.position, Quaternion.identity);
+            Destroy(hpBar.gameObject);
+            Destroy(gameObject);
         }
+    }
+    IEnumerator GrowObject()
+    {
+        yield return new WaitForSeconds(growTime);
+        gameObject.transform.localScale += new Vector3(0.04f, 0.04f, 0.04f);
+        needGrow = true;
     }
     void SetHpBar()
     {
@@ -88,11 +104,14 @@ public class Gatherable : MonoBehaviour
         {
             if (gatherableType == other.GetComponent<Tool>().toolType)
             {
-                attacked = true;
-                nowHp -= Player.instance.Damage;
-                if (nowHp < 0) nowHp = 0;
-                SoundManager.instance.PlayerSoundPlay(gatherableType, false);
-                RefreshHpBar();
+                if (hitAble)
+                {
+                    attacked = true;
+                    nowHp -= Player.instance.Damage;
+                    if (nowHp < 0) nowHp = 0;
+                    SoundManager.instance.PlayerSoundPlay(gatherableType, false);
+                    RefreshHpBar();
+                }
             }
         }
     }

@@ -113,7 +113,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nowHp: 10
   maxHp: 10
+  dropNum: 3
   dropItem: {fileID: 3991231168951902598, guid: 5a3d73fc297230b4293fa037f6857ebc, type: 3}
   gatherableType: 1
   hpBarPrefab: {fileID: 8948261118332420198, guid: 0281a9920dadf58438801c7b6bac7465, type: 3}
+  readyPrefab: {fileID: 1118888028934338980, guid: 7bff91638df91d642a59cec3aee20a25, type: 3}
   hpBarOffset: {x: 0, y: 1, z: 0}

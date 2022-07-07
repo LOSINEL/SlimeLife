@@ -7,14 +7,14 @@ public class Player : MonoBehaviour
     public static Player instance;
     public float mvspd_ = 2.5f, mvspd = 2.5f;
     public float mvsnd = 1f, atkspd = 1f;
-    public int jumpPower = 10;
+    public int jumpPower = 14;
     float attackAnimTime = 0.3f;
     bool move_able = true;
     bool jump_able = true;
     bool mvsnd_able = true;
     bool attack_able = true;
     [SerializeField] bool isMoving = false, grounded = false, isAttacking = false;
-    [SerializeField] float gravityScale = 6f;
+    [SerializeField] float gravityScale = 10f;
     [SerializeField] GameObject weapon, mainCamera;
     [SerializeField] int damage = 1;
     Rigidbody rigid;
@@ -68,9 +68,9 @@ public class Player : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (!isMoving && grounded) rigid.velocity = Vector3.zero;
+        rigid.velocity += new Vector3(0, -1, 0) * gravityScale * Time.deltaTime;
+        if (!isMoving && grounded) rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
         isMoving = false;
-        rigid.velocity += new Vector3(0, -1, 0) * gravityScale;
         mainCamera.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 10.5f, gameObject.transform.position.z - 8.5f);
     }
     IEnumerator Attack()

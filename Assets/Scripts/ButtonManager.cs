@@ -22,9 +22,20 @@ public class ButtonManager : MonoBehaviour
         Player.instance.ActiveAll(!optionCanvas.activeSelf);
     }
 
-    public void CloseNpcCanvas()
+    public void NpcNextScript()
     {
-        Hand.instance.npcCanvas.SetActive(false);
-        Player.instance.ActiveAll(true);
+        if (!NpcScriptManager.instance.ScriptEnd())
+        {
+            NpcScriptManager.instance.ShowAllNpcScript();
+        }
+        else
+        {
+            NpcScriptManager.instance.ShowNpcScript();
+        }
+    }
+
+    public void NpcClostScript()
+    {
+        NpcScriptManager.instance.ExitNpcScript();
     }
 }

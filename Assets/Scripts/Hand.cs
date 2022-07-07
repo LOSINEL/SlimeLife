@@ -11,18 +11,10 @@ public class Hand : MonoBehaviour
     public Dictionary<GameObject, float> colObject = new Dictionary<GameObject, float>();
     float[] distance_arr;
     float minDistance;
-    float npcScriptTime = 0.25f;
     string minDistanceObjectName = "";
     public GameObject pushButton;
     public GameObject itemInfoText;
-    public GameObject npcCanvas;
-    string[] npcScript;
-    bool npcScriptTimeEnd = false;
-    int npcScriptCheckNum = 0;
-    int npcScriptType = 0;
-    int npcScriptNum = 0;
-
-    public float NpcScriptTime { get { return NpcScriptTime; } set { npcScriptTime = value; } }
+    public GameObject MinDistanceObject { get { return minDistanceObject; } }
 
     void Awake()
     {
@@ -70,59 +62,44 @@ public class Hand : MonoBehaviour
                 minDistanceObjectName = minDistanceObject.name;
             }
         }
-        if (Input.GetKeyDown(KeyCode.E) && !npcCanvas.activeSelf)
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
+            // Item Ω¿µÊ
             if (minDistanceObject.tag.Equals("Item"))
             {
                 Debug.Log(minDistanceObject.GetComponent<ItemPickUp>().item.itemName + "∏¶ »πµÊ«ﬂ¥Ÿ");
                 colObject.Remove(minDistanceObject);
                 Destroy(minDistanceObject);
             }
-            if (minDistanceObject.tag.Equals("Npc"))
+            // Npc ¥Î»≠
+            if (!NpcScriptManager.instance.npcCanvas.activeSelf)
             {
-                npcCanvas.SetActive(true);
-                npcCanvas.GetComponentsInChildren<Image>()[1].sprite = minDistanceObject.GetComponent<NpcTouch>().npc.npcImage;
-                npcCanvas.GetComponentsInChildren<Text>()[0].text = minDistanceObject.GetComponent<NpcTouch>().npc.npcName;
-                npcCanvas.GetComponentsInChildren<Text>()[1].text = "";
-                npcScript = minDistanceObject.GetComponent<NpcTouch>().npc.npcScript[npcScriptType].script[npcScriptNum].Split(' ');
-                Player.instance.ActiveAll(false);
-            }
-        }
-        if(npcCanvas.activeSelf)
-        {
-            if (!npcScriptTimeEnd)
-            {
-                if (npcScriptCheckNum >= npcScript.Length)
+                if (minDistanceObject.tag.Equals("Npc"))
                 {
-                    if (Input.GetKeyUp(KeyCode.Q))
-                    {
-                        npcScriptCheckNum = 0;
-                        npcScriptType = 0;
-                        npcScriptNum = 0;
-                        npcCanvas.SetActive(false);
-                        Player.instance.ActiveAll(true);
-                    }
-                    if (Input.GetKeyUp(KeyCode.E) && npcScriptNum < minDistanceObject.GetComponent<NpcTouch>().npc.npcScript[npcScriptType].script.Length - 1)
-                    {
-                        npcCanvas.GetComponentsInChildren<Text>()[1].text = "";
-                        npcScript = minDistanceObject.GetComponent<NpcTouch>().npc.npcScript[npcScriptType].script[++npcScriptNum].Split(' ');
-                        npcScriptCheckNum = 0;
-                    }
-                    return;
+                    NpcScriptManager.instance.SetNpcCanvas();
+                }
+            }
+            else
+            {
+                if (!NpcScriptManager.instance.ScriptEnd())
+                {
+                    NpcScriptManager.instance.ShowAllNpcScript();
                 }
                 else
                 {
-                    npcCanvas.GetComponentsInChildren<Text>()[1].text += npcScript[npcScriptCheckNum++] + " ";
+                    NpcScriptManager.instance.ShowNpcScript();
                 }
-                npcScriptTimeEnd = true;
-                StartCoroutine(NpcScriptText());
             }
         }
-    }
-    IEnumerator NpcScriptText()
-    {
-        yield return new WaitForSeconds(npcScriptTime);
-        npcScriptTimeEnd = false;
+        if (NpcScriptManager.instance.npcCanvas.activeSelf && !NpcScriptManager.instance.ScriptEnd())
+        {
+            NpcScriptManager.instance.ShowNpcScript();
+        }
+        if (Input.GetKeyDown(KeyCode.Q) && NpcScriptManager.instance.npcCanvas.activeSelf)
+        {
+            NpcScriptManager.instance.ExitNpcScript();
+        }
     }
     void RefreshPushButton()
     {
