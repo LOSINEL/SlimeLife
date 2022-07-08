@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public static bool inventoryActivated = false;
     [SerializeField] GameObject InventoryBackground;
     [SerializeField] GameObject InventorySlotsParent;
     InventorySlot[] slots;
@@ -12,7 +11,6 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         slots = InventorySlotsParent.GetComponentsInChildren<InventorySlot>();
-        CloseInventory();
     }
 
     void Update()
@@ -24,20 +22,13 @@ public class Inventory : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.I))
         {
-            inventoryActivated = !inventoryActivated;
-            if (inventoryActivated) OpenInventory();
-            else CloseInventory();
+            InventoryBackground.SetActive(!InventoryBackground.activeSelf);
         }
     }
 
-    public void OpenInventory()
+    public void TryInventory()
     {
-        InventoryBackground.SetActive(true);
-    }
-
-    public void CloseInventory()
-    {
-        InventoryBackground.SetActive(false);
+        InventoryBackground.SetActive(!InventoryBackground.activeSelf);
     }
 
     public void AcquireItem(Item item, int amount = 1)
