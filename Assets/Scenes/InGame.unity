@@ -9334,7 +9334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pushButton: {fileID: 262084614}
   itemInfoText: {fileID: 2017524768}
-  inventory: {fileID: 0}
+  inventory: {fileID: 120927390}
 --- !u!1 &940960359
 GameObject:
   m_ObjectHideFlags: 0
