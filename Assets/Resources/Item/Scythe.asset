@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uB0AB"
   itemType: 1
-  itemImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  itemImage: {fileID: 21300000, guid: f0e42fad62a646c4da281bd31b30c3f1, type: 3}
   itemPrefab: {fileID: 4670266224883886095, guid: a548532371d02904286ae55665fd6570, type: 3}
   itemInfo: "\uC2DD\uBB3C\uC744 \uBCA8 \uC218 \uC788\uB294 \uB0AB\uC774\uB2E4."
