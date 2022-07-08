@@ -14,6 +14,7 @@ public class Hand : MonoBehaviour
     string minDistanceObjectName = "";
     public GameObject pushButton;
     public GameObject itemInfoText;
+    public Inventory inventory;
     public GameObject MinDistanceObject { get { return minDistanceObject; } }
 
     void Awake()
@@ -68,7 +69,7 @@ public class Hand : MonoBehaviour
             // Item Ω¿µÊ
             if (minDistanceObject.tag.Equals("Item"))
             {
-                Debug.Log(minDistanceObject.GetComponent<ItemPickUp>().item.itemName + "∏¶ »πµÊ«ﬂ¥Ÿ");
+                inventory.GetComponent<Inventory>().AcquireItem(minDistanceObject.GetComponent<ItemPickUp>().item);
                 colObject.Remove(minDistanceObject);
                 Destroy(minDistanceObject);
             }
