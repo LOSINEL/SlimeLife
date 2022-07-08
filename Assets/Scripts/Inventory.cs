@@ -7,9 +7,11 @@ public class Inventory : MonoBehaviour
     [SerializeField] GameObject InventoryBackground;
     [SerializeField] GameObject InventorySlotsParent;
     InventorySlot[] slots;
+    RectTransform rectTransform;
 
     void Start()
     {
+        rectTransform = InventoryBackground.GetComponent<RectTransform>();
         slots = InventorySlotsParent.GetComponentsInChildren<InventorySlot>();
     }
 
