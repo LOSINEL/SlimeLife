@@ -9,8 +9,10 @@ public class UIMoving : MonoBehaviour
     float canvasX, canvasY;
     bool topBarClicked = false;
     public float topBarHeight;
+    RectTransform rectTransform;
     void Start()
     {
+        rectTransform = gameObject.GetComponent<RectTransform>();
         canvasPos = uiCanvas.GetComponent<RectTransform>().rect.position;
         canvasX = uiCanvas.GetComponent<RectTransform>().rect.width / 2;
         canvasY = uiCanvas.GetComponent<RectTransform>().rect.height / 2;
@@ -32,7 +34,7 @@ public class UIMoving : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && topBarClicked)
         {
-            gameObject.transform.position = new Vector3(Input.mousePosition.x - canvasX, Input.mousePosition.y - canvasY - gameObject.GetComponent<RectTransform>().rect.height / 2 + uiCanvas.transform.position.y, canvasPos.z);
+            gameObject.transform.position = new Vector3(Input.mousePosition.x - canvasX, Input.mousePosition.y - canvasY - rectTransform.rect.height / 2 + uiCanvas.transform.position.y, canvasPos.z);
         }
         if (Input.GetMouseButtonUp(0) && topBarClicked)
         {
@@ -42,7 +44,7 @@ public class UIMoving : MonoBehaviour
     }
     void TopBarSet()
     {
-        topBarLeftUp = new Vector3(gameObject.GetComponent<RectTransform>().rect.width / -2, gameObject.GetComponent<RectTransform>().rect.height / 2, 0) + gameObject.GetComponent<RectTransform>().transform.position; // »ó´Ü¹Ù ÁÂ»ó´Ü ÁÂÇ¥
-        topBarRightDown = new Vector3(gameObject.GetComponent<RectTransform>().rect.width / 2, gameObject.GetComponent<RectTransform>().rect.height / 2 - topBarHeight, 0) + gameObject.GetComponent<RectTransform>().transform.position; // »ó´Ü¹Ù ¿ìÇÏ´Ü ÁÂÇ¥
+        topBarLeftUp = new Vector3(rectTransform.rect.width / -2, rectTransform.rect.height / 2, 0) + rectTransform.transform.position; // »ó´Ü¹Ù ÁÂ»ó´Ü ÁÂÇ¥
+        topBarRightDown = new Vector3(rectTransform.rect.width / 2, rectTransform.rect.height / 2 - topBarHeight, 0) + rectTransform.transform.position; // »ó´Ü¹Ù ¿ìÇÏ´Ü ÁÂÇ¥
     }
 }
