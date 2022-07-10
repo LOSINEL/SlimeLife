@@ -74,7 +74,7 @@ public class Hand : MonoBehaviour
                 Destroy(minDistanceObject);
             }
             // Npc ¥Î»≠
-            if (!NpcScriptManager.instance.npcCanvas.activeSelf)
+            if (!NpcScriptManager.instance.npcScriptBackground.activeSelf)
             {
                 if (minDistanceObject.tag.Equals("Npc"))
                 {
@@ -93,11 +93,11 @@ public class Hand : MonoBehaviour
                 }
             }
         }
-        if (NpcScriptManager.instance.npcCanvas.activeSelf && !NpcScriptManager.instance.ScriptEnd())
+        if (NpcScriptManager.instance.npcScriptBackground.activeSelf && !NpcScriptManager.instance.ScriptEnd())
         {
             NpcScriptManager.instance.ShowNpcScript();
         }
-        if (Input.GetKeyDown(KeyCode.Q) && NpcScriptManager.instance.npcCanvas.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Q) && NpcScriptManager.instance.npcScriptBackground.activeSelf)
         {
             NpcScriptManager.instance.ExitNpcScript();
         }

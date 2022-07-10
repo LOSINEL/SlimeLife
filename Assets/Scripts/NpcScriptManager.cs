@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class NpcScriptManager : MonoBehaviour
 {
     public static NpcScriptManager instance;
-    public GameObject npcCanvas;
+    public GameObject npcScriptBackground;
     string npcScript;
     bool npcScriptTimeEnd = false;
     int npcScriptCheckNum = 0;
@@ -22,8 +22,8 @@ public class NpcScriptManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        npcScriptName = npcCanvas.GetComponentsInChildren<Text>()[0];
-        npcScriptText = npcCanvas.GetComponentsInChildren<Text>()[1];
+        npcScriptName = npcScriptBackground.GetComponentsInChildren<Text>()[0];
+        npcScriptText = npcScriptBackground.GetComponentsInChildren<Text>()[1];
     }
     public void ShowNpcScript()
     {
@@ -47,7 +47,7 @@ public class NpcScriptManager : MonoBehaviour
         npcScriptCheckNum = 0;
         npcScriptType = 0;
         npcScriptNum = 0;
-        npcCanvas.SetActive(false);
+        npcScriptBackground.SetActive(false);
         Player.instance.ActiveAll(true);
     }
     public bool ScriptEnd()
@@ -68,8 +68,8 @@ public class NpcScriptManager : MonoBehaviour
     }
     public void SetNpcCanvas()
     {
-        npcCanvas.SetActive(true);
-        npcCanvas.GetComponentsInChildren<Image>()[1].sprite = Hand.instance.MinDistanceObject.GetComponent<NpcTouch>().npc.npcImage;
+        npcScriptBackground.SetActive(true);
+        npcScriptBackground.GetComponentsInChildren<Image>()[1].sprite = Hand.instance.MinDistanceObject.GetComponent<NpcTouch>().npc.npcImage;
         npcScriptName.text = Hand.instance.MinDistanceObject.GetComponent<NpcTouch>().npc.npcName;
         npcScriptText.text = "";
         npcScript = Hand.instance.MinDistanceObject.GetComponent<NpcTouch>().npc.npcScript[NpcScriptType].script[NpcScriptNum];
@@ -77,11 +77,12 @@ public class NpcScriptManager : MonoBehaviour
     }
     IEnumerator NpcScriptText()
     {
-        yield return new WaitForSeconds(npcScriptTime);
         if (npcScriptCheckNum < npcScript.Length)
         {
             npcScriptText.text += npcScript[npcScriptCheckNum];
             npcScriptCheckNum += 1;
+            Debug.Log(npcScriptCheckNum);
+            yield return new WaitForSeconds(npcScriptTime);
         }
         else
         {

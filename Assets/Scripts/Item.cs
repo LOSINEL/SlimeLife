@@ -10,7 +10,8 @@ public class Item : ScriptableObject
         Weapon, // 무기
         Tool, // 도구
         Consumable, // 소모품
-        Ingredient // 재료
+        Ingredient, // 재료
+        Shoes // 신발
     }
 
     public string itemName;
@@ -18,4 +19,6 @@ public class Item : ScriptableObject
     public Sprite itemImage;
     public GameObject itemPrefab;
     public string itemInfo;
+
+    public float moveSpd;
 }
