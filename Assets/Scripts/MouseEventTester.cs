@@ -7,6 +7,11 @@ public class MouseEventTester : MonoBehaviour
 {
     void Update()
     {
-        Debug.Log(EventSystem.current.IsPointerOverGameObject());
+        try
+        {
+            Debug.Log(EventSystem.current.IsPointerOverGameObject());
+            Debug.Log(EventSystem.current.currentSelectedGameObject.name);
+        }
+        catch { }
     }
 }
