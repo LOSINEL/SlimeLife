@@ -77,7 +77,7 @@ public class Gatherable : MonoBehaviour
     }
     void SetHpBar()
     {
-        hpCanvas = GameObject.Find("HP_Canvas").GetComponent<Canvas>();
+        hpCanvas = GameObject.Find("HPCanvas").GetComponent<Canvas>();
         hpBar = Instantiate<GameObject>(hpBarPrefab, hpCanvas.transform);
         hpbarImage = hpBar.GetComponentsInChildren<Image>()[1];
 

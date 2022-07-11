@@ -75,6 +75,19 @@ public class NpcScriptManager : MonoBehaviour
         npcScript = Hand.instance.MinDistanceObject.GetComponent<NpcTouch>().npc.npcScript[NpcScriptType].script[NpcScriptNum];
         Player.instance.ActiveAll(false);
     }
+
+    public void NpcNextScript()
+    {
+        if (!ScriptEnd())
+        {
+            ShowAllNpcScript();
+        }
+        else
+        {
+            ShowNpcScript();
+        }
+    }
+
     IEnumerator NpcScriptText()
     {
         if (npcScriptCheckNum < npcScript.Length)

@@ -17,14 +17,9 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
-        TryOpenInventory();
-    }
-
-    void TryOpenInventory()
-    {
-        if(Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            InventoryBackground.SetActive(!InventoryBackground.activeSelf);
+            TryInventory();
         }
     }
 
