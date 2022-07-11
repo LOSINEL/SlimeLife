@@ -6,20 +6,19 @@ using UnityEngine.SceneManagement;
 public class ButtonManager : MonoBehaviour
 {
     public static ButtonManager instance;
-    public GameObject optionCanvas, grayCanvas;
-    bool isOptionCanvasOpen = false;
-    public bool IsOptionCanvasOpen { get { return isOptionCanvasOpen; } }
+    public GameObject optionWindow, grayWindow;
+    bool isOptionWindowOpen = false;
     void Awake()
     {
         instance = this;
     }
     public void SetOptionCanvas()
     {
-        grayCanvas.SetActive(!optionCanvas.activeSelf);
-        optionCanvas.SetActive(!optionCanvas.activeSelf);
-        isOptionCanvasOpen = optionCanvas.activeSelf;
-        Time.timeScale = (optionCanvas.activeSelf) ? 0f : 1f;
-        Player.instance.ActiveAll(!optionCanvas.activeSelf);
+        grayWindow.SetActive(!optionWindow.activeSelf);
+        optionWindow.SetActive(!optionWindow.activeSelf);
+        isOptionWindowOpen = optionWindow.activeSelf;
+        Time.timeScale = (optionWindow.activeSelf) ? 0f : 1f;
+        Player.instance.ActiveAll(!optionWindow.activeSelf);
     }
 
     public void NpcNextScript()

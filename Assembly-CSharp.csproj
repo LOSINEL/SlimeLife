@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\NpcTouch.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\ButtonManager.cs" />
+    <Compile Include="Assets\Scripts\MouseEventTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Kawaii Slime\Shader\Unity-chan Shader Ver 1.2.1\readme.txt" />

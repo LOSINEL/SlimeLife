@@ -20,7 +20,7 @@ public class UIMoving : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             if (Input.mousePosition.x - canvasX >= topBarLeftUp.x &&
                 Input.mousePosition.x - canvasX <= topBarRightDown.x)
