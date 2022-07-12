@@ -6,13 +6,13 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] GameObject InventoryBackground;
     [SerializeField] GameObject InventorySlotsParent;
-    InventorySlot[] slots;
+    ItemSlot[] slots;
     RectTransform rectTransform;
 
     void Start()
     {
         rectTransform = InventoryBackground.GetComponent<RectTransform>();
-        slots = InventorySlotsParent.GetComponentsInChildren<InventorySlot>();
+        slots = InventorySlotsParent.GetComponentsInChildren<ItemSlot>();
     }
 
     void Update()
@@ -32,15 +32,13 @@ public class Inventory : MonoBehaviour
     {
         if (Item.ItemType.Tool != item.itemType && Item.ItemType.Weapon != item.itemType)
         {
-            Debug.Log("1");
             for (int i = 0; i < slots.Length; i++)
             {
-                Debug.Log("2");
                 if (slots[i].item != null)
                 {
                     if (slots[i].item.itemName == item.itemName)
                     {
-                        slots[i].SetSlotAmount(amount);
+                        slots[i].AddItem(item);
                         return;
                     }
                 }
@@ -50,7 +48,7 @@ public class Inventory : MonoBehaviour
         {
             if (slots[i].item == null)
             {
-                slots[i].AddItem(item, amount);
+                slots[i].AddItem(item);
                 return;
             }
         }

@@ -57,27 +57,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\ItemMoving.cs" />
     <Compile Include="Assets\Scripts\NpcScriptManager.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Gatherable.cs" />
     <Compile Include="Assets\Scripts\HpBar.cs" />
-    <Compile Include="Assets\Scripts\InventorySlot.cs" />
+    <Compile Include="Assets\Scripts\ItemSlot.cs" />
     <Compile Include="Assets\Scripts\ItemPickUp.cs" />
     <Compile Include="Assets\Scripts\Feet.cs" />
     <Compile Include="Assets\Scripts\SightAngle.cs" />
+    <Compile Include="Assets\Scripts\Option.cs" />
     <Compile Include="Assets\Scripts\UIMoving.cs" />
     <Compile Include="Assets\Scripts\Npc.cs" />
     <Compile Include="Assets\Scripts\Hand.cs" />
+    <Compile Include="Assets\Scripts\CharacterInfo.cs" />
     <Compile Include="Assets\Scripts\GatherableRegen.cs" />
     <Compile Include="Assets\Scripts\Tool.cs" />
     <Compile Include="Assets\Scripts\TextSpeed.cs" />
     <Compile Include="Assets\Scripts\EquipmentSlot.cs" />
     <Compile Include="Assets\Scripts\NpcTouch.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
-    <Compile Include="Assets\Scripts\MouseEventTester.cs" />
-    <Compile Include="Assets\Scripts\CharacterInfo.cs" />
-    <Compile Include="Assets\Scripts\Option.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Kawaii Slime\Shader\Unity-chan Shader Ver 1.2.1\readme.txt" />

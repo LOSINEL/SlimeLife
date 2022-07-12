@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
+public class ItemSlot : MonoBehaviour
 {
     public Item item;
-    public int itemAmount;
+    public int itemAmount = 0;
     public Image itemImage;
+    [SerializeField] float imageAlpha;
     [SerializeField] Text itemAmountText;
     [SerializeField] GameObject itemAmountImage;
+    public float ImageAlpha { get { return imageAlpha; } }
 
-    void SetColor(float alpha)
+    public void SetColor(float alpha)
     {
-        Color color = itemImage.color;
-        color.a = alpha;
-        itemImage.color = color;
+        imageAlpha = alpha;
+        itemImage.color = new Color(1, 1, 1, imageAlpha);
     }
 
-    public void AddItem(Item item, int amount = 1)
+    public void AddItem(Item item)
     {
         this.item = item;
-        itemAmount = amount;
+        itemAmount++;
         itemImage.sprite = item.itemImage;
         if (item.itemType != Item.ItemType.Tool && item.itemType != Item.ItemType.Weapon)
         {
@@ -38,15 +39,18 @@ public class InventorySlot : MonoBehaviour
 
     public void SetSlotAmount(int amount)
     {
-        itemAmount += amount;
+        itemAmount = amount;
         itemAmountText.text = itemAmount.ToString();
         if (itemAmount <= 0)
         {
             ClearSlot();
+        }else
+        {
+            SetColor(1);
         }
     }
 
-    void ClearSlot()
+    public void ClearSlot()
     {
         item = null;
         itemAmount = 0;
