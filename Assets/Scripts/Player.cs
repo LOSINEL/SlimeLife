@@ -13,14 +13,18 @@ public class Player : MonoBehaviour
     bool jump_able = true;
     bool mvsnd_able = true;
     bool attack_able = true;
+    [SerializeField]bool hitable = true;
     [SerializeField] bool isMoving = false, grounded = false, isAttacking = false;
     [SerializeField] float gravityScale = 10f;
-    [SerializeField] GameObject weapon, mainCamera;
-    [SerializeField] int damage = 1;
+    [SerializeField] GameObject tool, weapon, mainCamera;
+    [SerializeField] int weaponDamage = 1;
+    [SerializeField] int toolDamage = 1;
     Rigidbody rigid;
     public bool Grounded { set { grounded = value; } }
     public bool IsAttacking { get { return isAttacking; } }
-    public int Damage { get { return damage; } }
+    public int WeaponDamage { get { return weaponDamage; } }
+    public int ToolDamage { get { return toolDamage; } }
+    public bool Hitable { get { return hitable; } set { hitable = value; } }
     void Awake()
     {
         instance = this;
@@ -55,12 +59,13 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.J) && attack_able)
             {
-                weapon.SetActive(true);
+                tool.SetActive(true);
+                hitable = true;
                 isAttacking = true;
                 attack_able = false;
                 move_able = false;
                 SoundManager.instance.PlayerSoundPlay((int)SoundManager.PlayerSoundName.WeaponSwing, true);
-                weapon.GetComponent<Animator>().SetTrigger("Attack");
+                tool.GetComponent<Animator>().SetTrigger("Attack");
                 StartCoroutine(AttackCoolTime());
                 StartCoroutine(Attack());
             }
@@ -78,7 +83,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(attackAnimTime);
         isAttacking = false;
         move_able = true;
-        weapon.SetActive(false);
+        tool.SetActive(false);
     }
     IEnumerator AttackCoolTime()
     {

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Tool : MonoBehaviour
 {
-    enum ToolType
+    public enum ToolType
     {
+        Hand, // ¸Ç¼Õ
         Axe, // µµ³¢
         PickAxe, // °î±ªÀÌ
         Scythe, // ³´
         Shovel // »ð
     }
     public int toolType;
+    [SerializeField] int damage;
 }

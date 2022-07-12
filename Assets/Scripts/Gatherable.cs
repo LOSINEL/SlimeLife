@@ -19,8 +19,7 @@ public class Gatherable : MonoBehaviour
     GameObject hpBar;
     Canvas hpCanvas;
     Image hpbarImage;
-    bool needGrow = true;
-    bool hitAble = false;
+    bool needgrow = true;
     enum GatherableType
     {
         Tree, // 도끼로만 데미지를 입음
@@ -36,12 +35,11 @@ public class Gatherable : MonoBehaviour
     }
     void Update()
     {
-        if (needGrow && gameObject.transform.localScale.x < 1f)
+        if (needgrow && gameObject.transform.localScale.x < 1f)
         {
-            needGrow = false;
+            needgrow = false;
             StartCoroutine(GrowObject());
         }
-        if (gameObject.transform.localScale.x >= 1f) hitAble = true;
         if (attacked)
         {
             gameObject.transform.position = basePos + new Vector3(Random.Range(-1 * vibrateRange, vibrateRange), 0, Random.Range(-1 * vibrateRange, vibrateRange));
@@ -49,17 +47,6 @@ public class Gatherable : MonoBehaviour
         }
         if (nowHp <= 0)
         {
-            switch(gatherableType)
-            {
-                case (int)GatherableType.Tree:
-                    break;
-                case (int)GatherableType.Mineral:
-                    break;
-                case (int)GatherableType.Plant:
-                    break;
-                case (int)GatherableType.Dirt:
-                    break;
-            }
             for (int i = 0; i < dropNum; i++)
             {
                 Instantiate(dropItem, new Vector3(gameObject.transform.position.x + Random.Range(-1 * dropRange, dropRange), gameObject.transform.position.y + dropRange, gameObject.transform.position.z + Random.Range(-1 * dropRange, dropRange)), Quaternion.identity);
@@ -72,8 +59,8 @@ public class Gatherable : MonoBehaviour
     IEnumerator GrowObject()
     {
         yield return new WaitForSeconds(growTime);
+        needgrow = true;
         gameObject.transform.localScale += new Vector3(0.04f, 0.04f, 0.04f);
-        needGrow = true;
     }
     void SetHpBar()
     {
@@ -102,12 +89,13 @@ public class Gatherable : MonoBehaviour
     {
         if (other.tag.Equals("Tool") && Player.instance.IsAttacking)
         {
-            if (gatherableType == other.GetComponent<Tool>().toolType)
+            if (gatherableType == other.GetComponent<Tool>().toolType - 1 || other.GetComponent<Tool>().toolType == (int)Tool.ToolType.Hand)
             {
-                if (hitAble)
+                if (Player.instance.Hitable)
                 {
+                    Player.instance.Hitable = false;
                     attacked = true;
-                    nowHp -= Player.instance.Damage;
+                    nowHp -= Player.instance.ToolDamage;
                     if (nowHp < 0) nowHp = 0;
                     SoundManager.instance.PlayerSoundPlay(gatherableType, false);
                     RefreshHpBar();

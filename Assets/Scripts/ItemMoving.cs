@@ -63,17 +63,18 @@ public class ItemMoving : MonoBehaviour
     void ItemSwap()
     {
         ItemSlot tmpItem = Object.Instantiate(unselectedItem);
-        
-        unselectedItem.item = selectedItem.item;
-        unselectedItem.SetColor(selectedItem.ImageAlpha);
-        unselectedItem.SetSlotAmount(selectedItem.itemAmount);
-        unselectedItem.GetComponentsInChildren<Image>()[1].sprite = selectedItem.GetComponentsInChildren<Image>()[1].sprite;
 
-        selectedItem.item = tmpItem.item;
-        selectedItem.SetColor(tmpItem.ImageAlpha);
-        selectedItem.SetSlotAmount(tmpItem.itemAmount);
-        selectedItem.GetComponentsInChildren<Image>()[1].sprite = tmpItem.GetComponentsInChildren<Image>()[1].sprite;
+        ItemOptionInput(unselectedItem, selectedItem);
+        ItemOptionInput(selectedItem, tmpItem);
 
         Destroy(tmpItem.gameObject);
+    }
+
+    void ItemOptionInput(ItemSlot deInputItem, ItemSlot inputItem)
+    {
+        deInputItem.item = inputItem.item;
+        deInputItem.SetColor(inputItem.ImageAlpha);
+        deInputItem.SetSlotAmount(inputItem.itemAmount);
+        deInputItem.GetComponentsInChildren<Image>()[1].sprite = inputItem.GetComponentsInChildren<Image>()[1].sprite;
     }
 }
