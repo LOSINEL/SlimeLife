@@ -10,8 +10,8 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
     [SerializeField] Slider masterVolume, bgmVolume, sfxVolume;
     AudioSource bgmPlayer, sfxPlayer;
-    [SerializeField] AudioClip[] playerSound = new AudioClip[playerSoundSize];
-    [SerializeField] AudioClip[] weaponSound = new AudioClip[weaponSoundSize];
+    AudioClip[] playerSound = new AudioClip[playerSoundSize];
+    AudioClip[] weaponSound = new AudioClip[weaponSoundSize];
     Text masterVolumeText, bgmVolumeText, sfxVolumeText;
     public enum PlayerSoundName
     {

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Gatherable : MonoBehaviour
 {
-    public int nowHp = 10, maxHp = 10, dropNum = 3;
+    [SerializeField] int dropNum = 3;
+    int nowHp = 10, maxHp = 10;
     public GameObject dropItem;
     float vibrateRange = 0.1f;
     float vibrateTime = 0.25f;

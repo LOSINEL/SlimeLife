@@ -10,7 +10,7 @@ public class ItemSlot : MonoBehaviour
     public Image itemImage;
     [SerializeField] Text itemAmountText;
     [SerializeField] GameObject itemAmountImage;
-    [SerializeField] float imageAlpha;
+    float imageAlpha;
     public float ImageAlpha { get { return imageAlpha; } }
     public enum SlotType
     {

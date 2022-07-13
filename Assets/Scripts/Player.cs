@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     bool jump_able = true;
     bool mvsnd_able = true;
     bool attack_able = true;
-    [SerializeField]bool hitable = true;
+    [SerializeField] bool hitable = true;
     [SerializeField] bool isMoving = false, grounded = false, isAttacking = false;
     [SerializeField] float gravityScale = 10f;
     [SerializeField] GameObject tool, weapon, mainCamera;

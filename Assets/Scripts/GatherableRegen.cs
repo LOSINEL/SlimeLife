@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GatherableRegen : MonoBehaviour
 {
-    public float regenTime = 5f;
+    [SerializeField] float regenTime = 5f;
     public GameObject gatherableObject;
     void Start()
     {

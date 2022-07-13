@@ -15,8 +15,7 @@ public class NpcScriptManager : MonoBehaviour
     float npcScriptTime = 0.05f;
     Text npcScriptText;
     Text npcScriptName;
-    public float NpcScriptTime { get { return npcScriptTime; } set { npcScriptTime = value; } }
-    public string NpcScript { set { npcScript = value; } }
+    public float NpcScriptTime { set { npcScriptTime = value; } }
     public int NpcScriptType { get { return npcScriptType; } }
     public int NpcScriptNum { get { return npcScriptNum; } }
     void Awake()
