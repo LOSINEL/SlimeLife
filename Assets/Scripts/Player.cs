@@ -13,11 +13,12 @@ public class Player : MonoBehaviour
     bool jump_able = true;
     bool mvsnd_able = true;
     bool attack_able = true;
-    [SerializeField] bool hitable = true;
-    [SerializeField] bool isMoving = false, grounded = false, isAttacking = false;
-    [SerializeField] float gravityScale = 10f;
-    [SerializeField] GameObject tool, weapon, mainCamera;
-    [SerializeField] int weaponDamage = 1;
+    public GameObject tool, weapon;
+    bool hitable = true;
+    bool isMoving = false, grounded = false, isAttacking = false;
+    float gravityScale = 10f;
+    [SerializeField] GameObject mainCamera;
+    int weaponDamage = 1;
     [SerializeField] int toolDamage = 1;
     Rigidbody rigid;
     public bool Grounded { set { grounded = value; } }
@@ -94,6 +95,16 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(mvsnd * 0.5f, mvsnd * 1.2f));
         mvsnd_able = true;
+    }
+    public void SetDamage(int dmg, bool isWeapon = true)
+    {
+        if(isWeapon)
+        {
+            weaponDamage = dmg;
+        }else
+        {
+            toolDamage = dmg;
+        }
     }
     public void ActiveAll(bool check = true)
     {

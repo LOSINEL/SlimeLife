@@ -10,6 +10,7 @@ public class ItemMoving : MonoBehaviour
     List<RaycastResult> raycastResults = new List<RaycastResult>();
     ItemSlot selectedItem;
     ItemSlot unselectedItem;
+    public GameObject holdingItemImage;
     bool isHoldItem = false;
 
     void Update()
@@ -23,11 +24,9 @@ public class ItemMoving : MonoBehaviour
                 try
                 {
                     selectedItem = raycastResults[1].gameObject.GetComponent<ItemSlot>();
-                    if (selectedItem.GetComponent<ItemSlot>().item == null)
+                    if (selectedItem.GetComponent<ItemSlot>().item != null)
                     {
-                        isHoldItem = false;
-                    }else
-                    {
+                        holdingItemImage.SetActive(true);
                         isHoldItem = true;
                     }
                 }
@@ -37,17 +36,25 @@ public class ItemMoving : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && isHoldItem)
         {
-            // 마우스 커서 밑에 selectedItem 아이템 이미지 알파 0.5 값으로 따라가게 만들기
+            holdingItemImage.GetComponent<Image>().sprite = selectedItem.GetComponentsInChildren<Image>()[1].sprite;
+            holdingItemImage.GetComponent<RectTransform>().transform.position =
+                Input.mousePosition - new Vector3(holdingItemImage.GetComponentsInParent<RectTransform>()[1].rect.width / 2,
+                holdingItemImage.GetComponentsInParent<RectTransform>()[1].rect.height / 2 - holdingItemImage.GetComponentsInParent<RectTransform>()[1].transform.position.y, 0);
         }
         if (Input.GetMouseButtonUp(0) && isHoldItem)
         {
+            holdingItemImage.SetActive(false);
             isHoldItem = false;
             pointer.position = Input.mousePosition;
             EventSystem.current.RaycastAll(pointer, raycastResults);
             if (raycastResults.Count > 0)
             {
-                unselectedItem = raycastResults[1].gameObject.GetComponent<ItemSlot>();
-                ItemSwap();
+                try
+                {
+                    unselectedItem = raycastResults[1].gameObject.GetComponent<ItemSlot>();
+                    ItemSwap();
+                }
+                catch { }
                 raycastResults.Clear();
             }
             else
@@ -65,31 +72,44 @@ public class ItemMoving : MonoBehaviour
          * unselectedItem 이 인벤토리 빈칸일 때는 그냥 스왑
          */
         ItemSlot tmpItem = Object.Instantiate(unselectedItem);
-        if (unselectedItem.item == null) // unselectedItem 이 빈칸일때
+        if (unselectedItem.item == null)
         {
             switch (unselectedItem.slotType)
             {
-                case ItemSlot.SlotType.Inventory: // unselectedItem 이 인벤토리 빈칸일때
-                    ItemOptionInput(selectedItem, unselectedItem); // unselectedItem 에 selectedItem 정보를 넣음
-                    ItemOptionInput(tmpItem, selectedItem); // selectedItem 에 tmpItem = unselectedItem 정보를 넣음
+                case ItemSlot.SlotType.Inventory:
+                    ItemOptionInput(selectedItem, unselectedItem);
+                    ItemOptionInput(tmpItem, selectedItem);
                     break;
-                case ItemSlot.SlotType.Weapon: // unselectedItem 이 장비창 무기 빈칸일때
-                case ItemSlot.SlotType.Tool: // unselectedItem 이 장비창 도구 빈칸일때
-                case ItemSlot.SlotType.Shoes: // unselectedItem 이 장비창 신발 빈칸일때
+                case ItemSlot.SlotType.Weapon:
+                case ItemSlot.SlotType.Shoes:
                     if (selectedItem.item.itemType.ToString() == unselectedItem.slotType.ToString())
                     {
-                        ItemOptionInput(selectedItem, unselectedItem); // unselectedItem 에 selectedItem 정보를 넣음
-                        ItemOptionInput(tmpItem, selectedItem); // selectedItem 에 tmpItem = unselectedItem 정보를 넣음
+                        ItemOptionInput(selectedItem, unselectedItem);
+                        ItemOptionInput(tmpItem, selectedItem);
                     }
+                    break;
+                case ItemSlot.SlotType.Tool:
+                    if (selectedItem.item.itemType.ToString() == unselectedItem.slotType.ToString())
+                    {
+                        ItemOptionInput(selectedItem, unselectedItem);
+                        ItemOptionInput(tmpItem, selectedItem);
+                    }
+                    Player.instance.tool.GetComponent<Tool>().ToolChanged(unselectedItem.item, unselectedItem.item.RequestToolItemType());
+                    Player.instance.SetDamage(unselectedItem.item.damage, false);
                     break;
             }
         }
-        else // unselectedItem 이 빈칸이 아닐때
+        else
         {
-            if (selectedItem.item.itemType == unselectedItem.item.itemType) // unselctedItem 이 selectedItem 과 item.itemType 이 같은 아이템일때
+            if (selectedItem.item.itemType == unselectedItem.item.itemType)
             {
                 ItemOptionInput(selectedItem, unselectedItem);
                 ItemOptionInput(tmpItem, selectedItem);
+                if(unselectedItem.slotType == ItemSlot.SlotType.Tool)
+                {
+                    Player.instance.tool.GetComponent<Tool>().ToolChanged(unselectedItem.item, unselectedItem.item.RequestToolItemType());
+                    Player.instance.SetDamage(unselectedItem.item.damage, false);
+                }
             }
             else
             {
