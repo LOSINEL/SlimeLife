@@ -90,7 +90,7 @@ public class Gatherable : MonoBehaviour
     {
         if (other.tag.Equals("Tool") && Player.instance.IsAttacking)
         {
-            if (gatherableType == other.GetComponent<Tool>().toolType - 1 || other.GetComponent<Tool>().toolType == (int)Tool.ToolType.Hand)
+            if (gatherableType == (int)other.GetComponent<Tool>().toolType - 1 || other.GetComponent<Tool>().toolType == (int)Tool.ToolType.Hand)
             {
                 if (Player.instance.Hitable)
                 {

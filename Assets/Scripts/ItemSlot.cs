@@ -11,11 +11,14 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] Text itemAmountText;
     [SerializeField] GameObject itemAmountImage;
     float imageAlpha;
+    public SlotType slotType;
     public float ImageAlpha { get { return imageAlpha; } }
     public enum SlotType
     {
         Inventory, // 인벤토리 슬롯
-        Equipment // 캐릭터 정보창 슬롯
+        Weapon, // 무기 슬롯
+        Tool, // 도구 슬롯
+        Shoes, // 신발 슬롯
     }
 
     public void SetColor(float alpha)

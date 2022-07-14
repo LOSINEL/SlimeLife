@@ -12,6 +12,6 @@ public class Tool : MonoBehaviour
         Scythe, // ³´
         Shovel // »ð
     }
-    public int toolType;
+    public ToolType toolType;
     [SerializeField] int damage;
 }
