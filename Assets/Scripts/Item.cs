@@ -19,7 +19,7 @@ public class Item : ScriptableObject
     public Sprite itemImage;
     public GameObject itemPrefab;
     public string itemInfo;
-    public int toolType = 0;
+    public Tool.ToolType toolType;
     public int damage = 0;
     public Tool.ToolType RequestToolItemType()
     {

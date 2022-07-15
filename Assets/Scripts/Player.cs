@@ -66,7 +66,21 @@ public class Player : MonoBehaviour
                 attack_able = false;
                 move_able = false;
                 SoundManager.instance.PlayerSoundPlay((int)SoundManager.PlayerSoundName.WeaponSwing, true);
-                tool.GetComponent<Animator>().SetTrigger("Attack");
+                switch(tool.GetComponent<Tool>().toolType)
+                {
+                    case Tool.ToolType.Hand:
+                        break;
+                    case Tool.ToolType.Axe:
+                        tool.GetComponent<Animator>().SetTrigger("ToolAxeAttack");
+                        break;
+                    case Tool.ToolType.PickAxe:
+                        tool.GetComponent<Animator>().SetTrigger("ToolPickAxeAttack");
+                        break;
+                    case Tool.ToolType.Scythe:
+                        break;
+                    case Tool.ToolType.Shovel:
+                        break;
+                }
                 StartCoroutine(AttackCoolTime());
                 StartCoroutine(Attack());
             }
