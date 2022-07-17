@@ -6287,6 +6287,10 @@ MonoBehaviour:
   mvsnd: 1
   atkspd: 1
   jumpPower: 14
+  move_able: 1
+  jump_able: 1
+  mvsnd_able: 1
+  attack_able: 1
   tool: {fileID: 61077266}
   weapon: {fileID: 0}
   mainCamera: {fileID: 747910853}

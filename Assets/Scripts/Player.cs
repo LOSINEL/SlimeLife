@@ -8,11 +8,10 @@ public class Player : MonoBehaviour
     public float mvspd_ = 2.5f, mvspd = 2.5f;
     public float mvsnd = 1f, atkspd = 1f;
     public int jumpPower = 14;
-    float attackAnimTime = 0.2f;
-    bool move_able = true;
-    bool jump_able = true;
-    bool mvsnd_able = true;
-    bool attack_able = true;
+    [SerializeField] bool move_able = true;
+    [SerializeField] bool jump_able = true;
+    [SerializeField] bool mvsnd_able = true;
+    [SerializeField] bool attack_able = true;
     public GameObject tool, weapon;
     bool hitable = true;
     bool isMoving = false, grounded = false, isAttacking = false;
@@ -56,34 +55,31 @@ public class Player : MonoBehaviour
                 StartCoroutine(MoveSound());
             }
         }
-        if(attack_able)
+        if (Input.GetKey(KeyCode.J) && attack_able)
         {
-            if (Input.GetKey(KeyCode.J) && attack_able)
+            tool.SetActive(true);
+            hitable = true;
+            isAttacking = true;
+            attack_able = false;
+            move_able = false;
+            SoundManager.instance.PlayerSoundPlay((int)SoundManager.PlayerSoundName.WeaponSwing, true);
+            switch (tool.GetComponent<Tool>().toolType)
             {
-                tool.SetActive(true);
-                hitable = true;
-                isAttacking = true;
-                attack_able = false;
-                move_able = false;
-                SoundManager.instance.PlayerSoundPlay((int)SoundManager.PlayerSoundName.WeaponSwing, true);
-                switch(tool.GetComponent<Tool>().toolType)
-                {
-                    case Tool.ToolType.Hand:
-                        break;
-                    case Tool.ToolType.Axe:
-                        tool.GetComponent<Animator>().SetTrigger("ToolAxeAttack");
-                        break;
-                    case Tool.ToolType.PickAxe:
-                        tool.GetComponent<Animator>().SetTrigger("ToolPickAxeAttack");
-                        break;
-                    case Tool.ToolType.Scythe:
-                        break;
-                    case Tool.ToolType.Shovel:
-                        break;
-                }
-                StartCoroutine(AttackCoolTime());
-                StartCoroutine(Attack());
+                case Tool.ToolType.Hand:
+                    break;
+                case Tool.ToolType.Axe:
+                    tool.GetComponent<Animator>().SetTrigger("ToolAxeAttack");
+                    break;
+                case Tool.ToolType.PickAxe:
+                    tool.GetComponent<Animator>().SetTrigger("ToolPickAxeAttack");
+                    break;
+                case Tool.ToolType.Scythe:
+                    break;
+                case Tool.ToolType.Shovel:
+                    break;
             }
+            StartCoroutine(AttackCoolTime());
+            StartCoroutine(AttackCheck());
         }
     }
     void LateUpdate()
@@ -93,9 +89,9 @@ public class Player : MonoBehaviour
         isMoving = false;
         mainCamera.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 10.5f, gameObject.transform.position.z - 8.5f);
     }
-    IEnumerator Attack()
+    IEnumerator AttackCheck()
     {
-        yield return new WaitForSeconds(attackAnimTime);
+        yield return new WaitForSeconds(tool.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
         isAttacking = false;
         move_able = true;
         tool.SetActive(false);
