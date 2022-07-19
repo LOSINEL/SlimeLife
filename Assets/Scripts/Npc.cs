@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Npc", menuName = "New Npc/npc")]
 public class Npc : ScriptableObject
 {
     public enum NpcType

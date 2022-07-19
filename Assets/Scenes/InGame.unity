@@ -11081,6 +11081,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Npc_Merchant
       objectReference: {fileID: 0}
+    - target: {fileID: 6255392967556648976, guid: 140d01ed03b06a640a11dba89816d35a, type: 3}
+      propertyPath: npc
+      value: 
+      objectReference: {fileID: 11400000, guid: b5abdda118002ff499696a856c31a7d5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 140d01ed03b06a640a11dba89816d35a, type: 3}
 --- !u!4 &1074273629 stripped

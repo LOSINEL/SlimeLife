@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e54a7da78226694599fc21513b78453, type: 3}
-  m_Name: Npc_StartVillage_Merchant
+  m_Script: {fileID: 11500000, guid: 02390b8007bad494b8dc16bd1f2fc7df, type: 3}
+  m_Name: Merchant_StartVillage
   m_EditorClassIdentifier: 
   npcName: "\uC2AC\uB77C\uC784 \uC0C1\uC778"
   npcType: 1

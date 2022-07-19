@@ -20,6 +20,8 @@ public class Item : ScriptableObject
     public GameObject itemPrefab;
     public string itemInfo;
     public Tool.ToolType toolType;
+    public int buyPrice;
+    public int sellPrice;
     public int damage = 0;
     public Tool.ToolType RequestToolItemType()
     {

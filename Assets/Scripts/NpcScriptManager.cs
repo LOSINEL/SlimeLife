@@ -93,7 +93,6 @@ public class NpcScriptManager : MonoBehaviour
         {
             npcScriptText.text += npcScript[npcScriptCheckNum];
             npcScriptCheckNum += 1;
-            Debug.Log(npcScriptCheckNum);
             yield return new WaitForSeconds(npcScriptTime);
         }
         else
