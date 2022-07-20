@@ -56,29 +56,29 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\SoundManager.cs" />
-    <Compile Include="Assets\Scripts\ItemMoving.cs" />
-    <Compile Include="Assets\Scripts\NpcScriptManager.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\Inventory.cs" />
-    <Compile Include="Assets\Scripts\Gatherable.cs" />
-    <Compile Include="Assets\Scripts\HpBar.cs" />
-    <Compile Include="Assets\Scripts\ItemSlot.cs" />
-    <Compile Include="Assets\Scripts\ItemPickUp.cs" />
-    <Compile Include="Assets\Scripts\Feet.cs" />
-    <Compile Include="Assets\Scripts\SightAngle.cs" />
-    <Compile Include="Assets\Scripts\Option.cs" />
-    <Compile Include="Assets\Scripts\UIMoving.cs" />
-    <Compile Include="Assets\Scripts\Npc.cs" />
-    <Compile Include="Assets\Scripts\Hand.cs" />
-    <Compile Include="Assets\Scripts\CharacterInfo.cs" />
-    <Compile Include="Assets\Scripts\GatherableRegen.cs" />
-    <Compile Include="Assets\Scripts\Tool.cs" />
-    <Compile Include="Assets\Scripts\TextSpeed.cs" />
-    <Compile Include="Assets\Scripts\EquipmentSlot.cs" />
-    <Compile Include="Assets\Scripts\NpcTouch.cs" />
-    <Compile Include="Assets\Scripts\Item.cs" />
-    <Compile Include="Assets\Scripts\NpcMerchant.cs" />
+    <Compile Include="Assets\Scripts\System\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Item\ItemMoving.cs" />
+    <Compile Include="Assets\Scripts\Npc\NpcScriptManager.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\UI\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Object\Gatherable.cs" />
+    <Compile Include="Assets\Scripts\UI\HpBar.cs" />
+    <Compile Include="Assets\Scripts\Npc\NpcMerchant.cs" />
+    <Compile Include="Assets\Scripts\Item\ItemSlot.cs" />
+    <Compile Include="Assets\Scripts\Item\ItemPickUp.cs" />
+    <Compile Include="Assets\Scripts\Player\Feet.cs" />
+    <Compile Include="Assets\Scripts\System\SightAngle.cs" />
+    <Compile Include="Assets\Scripts\System\Option.cs" />
+    <Compile Include="Assets\Scripts\UI\UIMoving.cs" />
+    <Compile Include="Assets\Scripts\Npc\Npc.cs" />
+    <Compile Include="Assets\Scripts\Player\Hand.cs" />
+    <Compile Include="Assets\Scripts\UI\CharacterInfo.cs" />
+    <Compile Include="Assets\Scripts\Object\GatherableRegen.cs" />
+    <Compile Include="Assets\Scripts\Player\Tool.cs" />
+    <Compile Include="Assets\Scripts\Npc\TextSpeed.cs" />
+    <Compile Include="Assets\Scripts\UI\EquipmentSlot.cs" />
+    <Compile Include="Assets\Scripts\Npc\NpcTouch.cs" />
+    <Compile Include="Assets\Scripts\Item\Item.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Kawaii Slime\Shader\Unity-chan Shader Ver 1.2.1\readme.txt" />
