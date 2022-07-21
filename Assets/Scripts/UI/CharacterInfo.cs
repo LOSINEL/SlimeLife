@@ -7,10 +7,8 @@ public class CharacterInfo : MonoBehaviour
     public GameObject characterInfoBackground;
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
+        if (Input.GetKeyDown(KeyCode.P))
             TryCharacterInfoWIndow();
-        }
     }
     public void TryCharacterInfoWIndow()
     {

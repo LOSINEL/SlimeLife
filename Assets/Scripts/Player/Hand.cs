@@ -15,6 +15,7 @@ public class Hand : MonoBehaviour
     public GameObject pushButton;
     public GameObject itemInfoText;
     public Inventory inventory;
+    [HideInInspector] public bool somethingOpen = false;
     public GameObject MinDistanceObject { get { return minDistanceObject; } }
 
     void Awake()
@@ -64,35 +65,38 @@ public class Hand : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (!somethingOpen)
         {
-            // Item Ω¿µÊ
-            if (minDistanceObject.tag.Equals("Item"))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                inventory.GetComponent<Inventory>().AcquireItem(minDistanceObject.GetComponent<ItemPickUp>().item);
-                colObject.Remove(minDistanceObject);
-                Destroy(minDistanceObject);
-            }
-            // Npc ¥Î»≠
-            if (!NpcScriptManager.instance.npcScriptBackground.activeSelf)
-            {
-                if (minDistanceObject.tag.Equals("Npc"))
+                // Item Ω¿µÊ
+                if (minDistanceObject.tag.Equals("Item"))
                 {
-                    NpcScriptManager.instance.SetNpcCanvas();
+                    inventory.GetComponent<Inventory>().AcquireItem(minDistanceObject.GetComponent<ItemPickUp>().item);
+                    colObject.Remove(minDistanceObject);
+                    Destroy(minDistanceObject);
+                }
+                // Npc ¥Î»≠
+                if (!NpcScriptManager.instance.npcScriptBackground.activeSelf)
+                {
+                    if (minDistanceObject.tag.Equals("Npc"))
+                    {
+                        NpcScriptManager.instance.SetNpcCanvas(minDistanceObject.GetComponent<NpcTouch>().npc);
+                    }
+                }
+                else
+                {
+                    NpcScriptManager.instance.NpcNextScript();
                 }
             }
-            else
+            if (NpcScriptManager.instance.npcScriptBackground.activeSelf && !NpcScriptManager.instance.ScriptEnd())
             {
-                NpcScriptManager.instance.NpcNextScript();
+                NpcScriptManager.instance.ShowNpcScript();
             }
-        }
-        if (NpcScriptManager.instance.npcScriptBackground.activeSelf && !NpcScriptManager.instance.ScriptEnd())
-        {
-            NpcScriptManager.instance.ShowNpcScript();
-        }
-        if (Input.GetKeyDown(KeyCode.Q) && NpcScriptManager.instance.npcScriptBackground.activeSelf)
-        {
-            NpcScriptManager.instance.ExitNpcScript();
+            if (Input.GetKeyDown(KeyCode.Q) && NpcScriptManager.instance.npcScriptBackground.activeSelf)
+            {
+                NpcScriptManager.instance.ExitNpcScript();
+            }
         }
     }
     void RefreshPushButton()

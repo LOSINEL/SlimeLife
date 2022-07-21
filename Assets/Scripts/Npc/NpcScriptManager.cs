@@ -7,6 +7,7 @@ public class NpcScriptManager : MonoBehaviour
 {
     public static NpcScriptManager instance;
     public GameObject npcScriptBackground;
+    public GameObject merchantShopButton;
     string npcScript;
     bool npcScriptTimeEnd = false;
     int npcScriptCheckNum = 0;
@@ -65,13 +66,21 @@ public class NpcScriptManager : MonoBehaviour
         npcScriptText.text = npcScript;
         npcScriptCheckNum = npcScript.Length;
     }
-    public void SetNpcCanvas()
+    public void SetNpcCanvas(Npc _npc)
     {
         npcScriptBackground.SetActive(true);
-        npcScriptBackground.GetComponentsInChildren<Image>()[1].sprite = Hand.instance.MinDistanceObject.GetComponent<NpcTouch>().npc.npcImage;
-        npcScriptName.text = Hand.instance.MinDistanceObject.GetComponent<NpcTouch>().npc.npcName;
+        if (_npc.npcType == Npc.NpcType.Merchant)
+        {
+            merchantShopButton.SetActive(true);
+        }
+        else
+        {
+            merchantShopButton.SetActive(false);
+        }
+        npcScriptBackground.GetComponentsInChildren<Image>()[1].sprite = _npc.npcImage;
+        npcScriptName.text = _npc.npcName;
         npcScriptText.text = "";
-        npcScript = Hand.instance.MinDistanceObject.GetComponent<NpcTouch>().npc.npcScript[NpcScriptType].script[NpcScriptNum];
+        npcScript = _npc.npcScript[NpcScriptType].script[NpcScriptNum];
         Player.instance.ActiveAll(false);
     }
 

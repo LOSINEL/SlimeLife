@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(mvsnd * 0.5f, mvsnd * 1.2f));
         mvsnd_able = true;
     }
-    public void SetDamage(int dmg, bool isWeapon = true)
+    public void SetDamage(int dmg, bool isWeapon)
     {
         if(isWeapon)
         {
@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
             toolDamage = dmg;
         }
     }
-    public void ActiveAll(bool check = true)
+    public void ActiveAll(bool check)
     {
         move_able = jump_able = attack_able = check;
     }

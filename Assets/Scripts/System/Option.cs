@@ -8,9 +8,7 @@ public class Option : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.O))
-        {
             TryOptionCanvas();
-        }
     }
     public void TryOptionCanvas()
     {
