@@ -13,13 +13,15 @@ public class UIMoving : MonoBehaviour
     float canvasX, canvasY;
     bool topBarClicked = false;
     RectTransform selectedUI;
-    GameObject selectedTopBar;
+    [SerializeField] GameObject selectedTopBar;
     void Start()
     {
         graphicRaycaster = GetComponent<GraphicRaycaster>();
         canvasPos = gameObject.GetComponent<RectTransform>().position;
         canvasX = gameObject.GetComponent<RectTransform>().rect.width / 2;
         canvasY = gameObject.GetComponent<RectTransform>().rect.height / 2;
+        selectedUI = gameObject.GetComponent<RectTransform>();
+        TopBarSet();
     }
     void Update()
     {
@@ -28,23 +30,20 @@ public class UIMoving : MonoBehaviour
             var ped = new PointerEventData(null);
             ped.position = Input.mousePosition;
             List<RaycastResult> results = new List<RaycastResult>();
-            try
+            graphicRaycaster.Raycast(ped, results);
+            results.Clear();
+            if (results.Count <= 0) return;
+            if (results[0].gameObject.tag.Equals("TopBar"))
             {
-                graphicRaycaster.Raycast(ped, results);
-            }
-            catch { }
-            if (results.Count <= 0)
-            {
-                return;
+                selectedTopBar = results[0].gameObject;
+                TopBarSet();
+                results.Clear();
             }
             else
             {
-                selectedTopBar = results[0].gameObject;
-                selectedUI = results[0].gameObject.GetComponentsInParent<RectTransform>()[results.Count - 1];
-                Debug.Log(selectedTopBar.name);
-                Debug.Log(selectedUI.name);
-                TopBarSet();
+                selectedTopBar = null;
                 results.Clear();
+                return;
             }
             if (Input.mousePosition.x - canvasX >= topBarLeftUp.x && Input.mousePosition.x - canvasX <= topBarRightDown.x)
             {
