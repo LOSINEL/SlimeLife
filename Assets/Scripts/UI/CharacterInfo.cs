@@ -8,9 +8,9 @@ public class CharacterInfo : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
-            TryCharacterInfoWIndow();
+            TryCharacterInfo();
     }
-    public void TryCharacterInfoWIndow()
+    public void TryCharacterInfo()
     {
         characterInfoBackground.SetActive(!characterInfoBackground.activeSelf);
     }

@@ -84,7 +84,7 @@ public class NpcScriptManager : MonoBehaviour
         Player.instance.ActiveAll(false);
     }
 
-    public void NpcNextScript()
+    public void NextNpcScript()
     {
         if (!ScriptEnd())
         {

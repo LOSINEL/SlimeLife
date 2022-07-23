@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\Npc\NpcScriptManager.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\UI\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Npc\NpcManager.cs" />
     <Compile Include="Assets\Scripts\Object\Gatherable.cs" />
     <Compile Include="Assets\Scripts\UI\HpBar.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcMerchant.cs" />
@@ -76,11 +77,10 @@
     <Compile Include="Assets\Scripts\Object\GatherableRegen.cs" />
     <Compile Include="Assets\Scripts\Player\Tool.cs" />
     <Compile Include="Assets\Scripts\Npc\TextSpeed.cs" />
+    <Compile Include="Assets\Scripts\Npc\NpcNormal.cs" />
     <Compile Include="Assets\Scripts\UI\EquipmentSlot.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcTouch.cs" />
     <Compile Include="Assets\Scripts\Item\Item.cs" />
-    <Compile Include="Assets\Scripts\Npc\NpcNormal.cs" />
-    <Compile Include="Assets\Scripts\Npc\NpcManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Kawaii Slime\Shader\Unity-chan Shader Ver 1.2.1\readme.txt" />

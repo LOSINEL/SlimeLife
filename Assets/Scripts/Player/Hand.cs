@@ -86,7 +86,7 @@ public class Hand : MonoBehaviour
                 }
                 else
                 {
-                    NpcScriptManager.instance.NpcNextScript();
+                    NpcScriptManager.instance.NextNpcScript();
                 }
             }
             if (NpcScriptManager.instance.npcScriptBackground.activeSelf && !NpcScriptManager.instance.ScriptEnd())

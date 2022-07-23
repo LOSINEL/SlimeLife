@@ -8,9 +8,9 @@ public class Option : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.O))
-            TryOptionCanvas();
+            TryOption();
     }
-    public void TryOptionCanvas()
+    public void TryOption()
     {
         grayWindow.SetActive(!optionWindow.activeSelf);
         optionWindow.SetActive(!optionWindow.activeSelf);
