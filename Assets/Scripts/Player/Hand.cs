@@ -15,7 +15,8 @@ public class Hand : MonoBehaviour
     public GameObject pushButton;
     public GameObject itemInfoText;
     public Inventory inventory;
-    [HideInInspector] public bool somethingOpen = false;
+    bool npcTalking = false;
+    public bool NpcTalking { get { return npcTalking; } set { npcTalking = value; } }
     public GameObject MinDistanceObject { get { return minDistanceObject; } }
 
     void Awake()
@@ -65,14 +66,14 @@ public class Hand : MonoBehaviour
             }
         }
 
-        if (!somethingOpen)
+        if (!NpcTalking)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 // Item ½Àµæ
                 if (minDistanceObject.tag.Equals("Item"))
                 {
-                    inventory.GetComponent<Inventory>().AcquireItem(minDistanceObject.GetComponent<ItemPickUp>().item);
+                    inventory.AcquireItem(minDistanceObject.GetComponent<ItemPickUp>().item);
                     colObject.Remove(minDistanceObject);
                     Destroy(minDistanceObject);
                 }

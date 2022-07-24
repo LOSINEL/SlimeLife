@@ -25,7 +25,7 @@ public class NpcManager : MonoBehaviour
         npcScriptWindow.SetActive(false);
         merchantShopBackground.SetActive(true);
         merchantShopGrayWindow.SetActive(true);
-        Hand.instance.somethingOpen = true;
+        Hand.instance.NpcTalking = true;
     }
     public void CloseMerchantShop()
     {
@@ -36,6 +36,6 @@ public class NpcManager : MonoBehaviour
         npcScriptWindow.SetActive(true);
         merchantShopBackground.SetActive(false);
         merchantShopGrayWindow.SetActive(false);
-        Hand.instance.somethingOpen = false;
+        Hand.instance.NpcTalking = false;
     }
 }

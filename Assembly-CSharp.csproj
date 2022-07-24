@@ -78,7 +78,6 @@
     <Compile Include="Assets\Scripts\Player\Tool.cs" />
     <Compile Include="Assets\Scripts\Npc\TextSpeed.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcNormal.cs" />
-    <Compile Include="Assets\Scripts\UI\EquipmentSlot.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcTouch.cs" />
     <Compile Include="Assets\Scripts\Item\Item.cs" />
   </ItemGroup>

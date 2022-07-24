@@ -26,13 +26,13 @@ public class Tool : MonoBehaviour
                 gameObject.GetComponent<MeshFilter>().mesh = toolMesh[(int)_toolType];
                 gameObject.GetComponent<MeshCollider>().sharedMesh = toolMesh[(int)_toolType];
                 gameObject.GetComponent<MeshRenderer>().material = toolMaterial[0];
-                toolType = _item.toolType;
+                toolType = _item.ToolType;
                 break;
             case ToolType.PickAxe:
                 gameObject.GetComponent<MeshFilter>().mesh = toolMesh[(int)_toolType];
                 gameObject.GetComponent<MeshCollider>().sharedMesh = toolMesh[(int)_toolType];
                 gameObject.GetComponent<MeshRenderer>().material = toolMaterial[1];
-                toolType = _item.toolType;
+                toolType = _item.ToolType;
                 break;
         }
     }

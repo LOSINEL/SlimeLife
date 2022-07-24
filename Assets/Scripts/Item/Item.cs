@@ -19,23 +19,12 @@ public class Item : ScriptableObject
     public Sprite itemImage;
     public GameObject itemPrefab;
     public string itemInfo;
-    public Tool.ToolType toolType;
     public int buyPrice;
     public int sellPrice;
-    public int damage = 0;
-    public Tool.ToolType RequestToolItemType()
-    {
-        switch(itemImage.name.Split('_')[1])
-        {
-            case "Axe":
-                return Tool.ToolType.Axe;
-            case "PickAxe":
-                return Tool.ToolType.PickAxe;
-            case "Scythe":
-                return Tool.ToolType.Scythe;
-            case "Shovel":
-                return Tool.ToolType.Shovel;
-        }
-        return Tool.ToolType.Hand;
-    }
+    [SerializeField] Tool.ToolType toolType;
+    [SerializeField] int damage = 0;
+    [SerializeField] float moveSpd = 0f;
+    public Tool.ToolType ToolType { get { return toolType; } }
+    public int Damage { get { return damage; } }
+    public float MoveSpd { get { return moveSpd; } }
 }

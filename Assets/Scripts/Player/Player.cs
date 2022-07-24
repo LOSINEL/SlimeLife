@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool jump_able = true;
     [SerializeField] bool mvsnd_able = true;
     [SerializeField] bool attack_able = true;
+    [SerializeField] int gold = 0;
     public GameObject tool, weapon;
     bool hitable = true;
     bool isMoving = false, grounded = false, isAttacking = false;
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
     int weaponDamage = 1;
     [SerializeField] int toolDamage = 1;
     Rigidbody rigid;
+    public int Gold { get { return gold; } }
     public bool Grounded { set { grounded = value; } }
     public bool IsAttacking { get { return isAttacking; } }
     public int WeaponDamage { get { return weaponDamage; } }
@@ -119,6 +121,10 @@ public class Player : MonoBehaviour
     public void ActiveAll(bool check)
     {
         move_able = jump_able = attack_able = check;
+    }
+    public void AddGold(int num)
+    {
+        gold += num;
     }
     void Sprint()
     {

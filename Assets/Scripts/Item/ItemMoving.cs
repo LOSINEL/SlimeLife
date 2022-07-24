@@ -11,6 +11,7 @@ public class ItemMoving : MonoBehaviour
     ItemSlot selectedItem;
     ItemSlot unselectedItem;
     public GameObject holdingItemImage;
+    public GameObject droppingItemWindow;
     bool isHoldItem = false;
 
     void Update()
@@ -59,7 +60,7 @@ public class ItemMoving : MonoBehaviour
             }
             else
             {
-                // 아이템을 버리시겠습니까? 메세지 출력
+                droppingItemWindow.SetActive(true);
             }
         }
     }
@@ -94,8 +95,8 @@ public class ItemMoving : MonoBehaviour
                         ItemOptionInput(selectedItem, unselectedItem);
                         ItemOptionInput(tmpItem, selectedItem);
                     }
-                    Player.instance.tool.GetComponent<Tool>().ToolChanged(unselectedItem.item, unselectedItem.item.RequestToolItemType());
-                    Player.instance.SetDamage(unselectedItem.item.damage, false);
+                    Player.instance.tool.GetComponent<Tool>().ToolChanged(unselectedItem.item, unselectedItem.item.ToolType);
+                    Player.instance.SetDamage(unselectedItem.item.Damage, false);
                     break;
             }
         }
@@ -107,8 +108,8 @@ public class ItemMoving : MonoBehaviour
                 ItemOptionInput(tmpItem, selectedItem);
                 if(unselectedItem.slotType == ItemSlot.SlotType.Tool)
                 {
-                    Player.instance.tool.GetComponent<Tool>().ToolChanged(unselectedItem.item, unselectedItem.item.RequestToolItemType());
-                    Player.instance.SetDamage(unselectedItem.item.damage, false);
+                    Player.instance.tool.GetComponent<Tool>().ToolChanged(unselectedItem.item, unselectedItem.item.ToolType);
+                    Player.instance.SetDamage(unselectedItem.item.Damage, false);
                 }
             }
             else

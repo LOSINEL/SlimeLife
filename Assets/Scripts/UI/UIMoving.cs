@@ -62,7 +62,11 @@ public class UIMoving : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && topBarClicked)
         {
-            selectedUI.position = new Vector3(Input.mousePosition.x - canvasX, Input.mousePosition.y - canvasY - selectedUI.rect.height / 2 + canvasPos.y + selectedTopBar.GetComponent<RectTransform>().rect.height / 4, canvasPos.z);
+            try
+            {
+                selectedUI.position = new Vector3(Input.mousePosition.x - canvasX, Input.mousePosition.y - canvasY - selectedUI.rect.height / 2 + canvasPos.y + selectedTopBar.GetComponent<RectTransform>().rect.height / 4, canvasPos.z);
+            }
+            catch { }
         }
         if (Input.GetMouseButtonUp(0))
         {

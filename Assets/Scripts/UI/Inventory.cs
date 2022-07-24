@@ -28,17 +28,17 @@ public class Inventory : MonoBehaviour
         InventoryBackground.SetActive(!InventoryBackground.activeSelf);
     }
 
-    public void AcquireItem(Item item, int amount = 1)
+    public void AcquireItem(Item _item)
     {
-        if (Item.ItemType.Tool != item.itemType && Item.ItemType.Weapon != item.itemType)
+        if (Item.ItemType.Tool != _item.itemType && Item.ItemType.Weapon != _item.itemType)
         {
             for (int i = 0; i < slots.Length; i++)
             {
                 if (slots[i].item != null)
                 {
-                    if (slots[i].item.itemName == item.itemName)
+                    if (slots[i].item.itemName == _item.itemName)
                     {
-                        slots[i].AddItem(item);
+                        slots[i].AddItem(_item);
                         return;
                     }
                 }
@@ -48,7 +48,7 @@ public class Inventory : MonoBehaviour
         {
             if (slots[i].item == null)
             {
-                slots[i].AddItem(item);
+                slots[i].AddItem(_item);
                 return;
             }
         }
