@@ -12,7 +12,7 @@ public class BuyingWindow : MonoBehaviour
     public Item item;
     public int itemPrice;
     public GameObject inventory;
-    public int itemAmount = 1;
+    int itemAmount = 1;
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Return))
@@ -41,24 +41,41 @@ public class BuyingWindow : MonoBehaviour
         itemInfoText.text = "item info";
         itemImage.sprite = null;
         itemPrice = 0;
+        itemAmount = 1;
     }
     public void BuyItemButtonSelected()
     {
         if (Player.instance.Gold >= itemAmount * itemPrice)
         {
-            Player.instance.AddGold(-1 * itemPrice * itemAmount);
-            inventory.GetComponent<Inventory>().AcquireItem(item, itemAmount);
-            CloseBuyingWindowSelected();
+            if (inventory.GetComponent<Inventory>().IsSlotFull(item))
+            {
+                Debug.Log("인벤토리가 가득 찼습니다.");
+            }
+            else
+            {
+                if (inventory.GetComponent<Inventory>().HowManyItemCanPutIn(item) >= itemAmount)
+                {
+                    Player.instance.AddGold(-1 * itemPrice * itemAmount);
+                    inventory.GetComponent<Inventory>().AcquireItem(item, itemAmount);
+                    CloseBuyingWindowSelected();
+                }else
+                {
+                    Debug.Log("인벤토리 슬롯이 부족합니다.");
+                }
+            }
         }
         else
         {
-            // 골드가 부족합니다 Alert 출력
-            CloseBuyingWindowSelected();
+            Debug.Log("골드가 부족합니다.");
         }
     }
     public void CloseBuyingWindowSelected()
     {
         InitBuyingWindow();
         gameObject.SetActive(false);
+    }
+
+    public void ValueChangeCheck()
+    {
     }
 }
