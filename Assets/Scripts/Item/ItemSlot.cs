@@ -19,6 +19,7 @@ public class ItemSlot : MonoBehaviour
         Weapon, // ¹«±â ½½·Ô
         Tool, // µµ±¸ ½½·Ô
         Shoes, // ½Å¹ß ½½·Ô
+        Shop, // »óÁ¡ ½½·Ô
     }
 
     public void SetColor(float alpha)
@@ -27,10 +28,10 @@ public class ItemSlot : MonoBehaviour
         itemImage.color = new Color(1, 1, 1, imageAlpha);
     }
 
-    public void AddItem(Item item)
+    public void AddItem(Item _item, int _amount = 1)
     {
-        this.item = item;
-        itemAmount++;
+        this.item = _item;
+        itemAmount += _amount;
         itemImage.sprite = item.itemImage;
         if (item.itemType != Item.ItemType.Tool && item.itemType != Item.ItemType.Weapon)
         {

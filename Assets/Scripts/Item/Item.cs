@@ -21,6 +21,7 @@ public class Item : ScriptableObject
     public string itemInfo;
     public int buyPrice;
     public int sellPrice;
+    public int bundleSize;
     [SerializeField] Tool.ToolType toolType;
     [SerializeField] int damage = 0;
     [SerializeField] float moveSpd = 0f;

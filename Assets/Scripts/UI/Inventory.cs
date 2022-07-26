@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] GameObject InventoryBackground;
     [SerializeField] GameObject InventorySlotsParent;
+    public Text goldText;
     ItemSlot[] slots;
     RectTransform rectTransform;
 
@@ -21,6 +23,10 @@ public class Inventory : MonoBehaviour
         {
             TryInventory();
         }
+        if(InventoryBackground.activeSelf)
+        {
+            RefreshGold();
+        }
     }
 
     public void TryInventory()
@@ -28,7 +34,7 @@ public class Inventory : MonoBehaviour
         InventoryBackground.SetActive(!InventoryBackground.activeSelf);
     }
 
-    public void AcquireItem(Item _item)
+    public void AcquireItem(Item _item, int _amount = 1)
     {
         if (Item.ItemType.Tool != _item.itemType && Item.ItemType.Weapon != _item.itemType)
         {
@@ -38,7 +44,7 @@ public class Inventory : MonoBehaviour
                 {
                     if (slots[i].item.itemName == _item.itemName)
                     {
-                        slots[i].AddItem(_item);
+                        slots[i].AddItem(_item, _amount);
                         return;
                     }
                 }
@@ -52,5 +58,10 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void RefreshGold()
+    {
+        goldText.text = Player.instance.Gold.ToString() + "G";
     }
 }

@@ -25,7 +25,7 @@ public class ItemMoving : MonoBehaviour
                 try
                 {
                     selectedItem = raycastResults[1].gameObject.GetComponent<ItemSlot>();
-                    if (selectedItem.GetComponent<ItemSlot>().item != null)
+                    if (selectedItem.GetComponent<ItemSlot>().item != null && !IsShopSlot(selectedItem))
                     {
                         holdingItemImage.SetActive(true);
                         isHoldItem = true;
@@ -53,7 +53,7 @@ public class ItemMoving : MonoBehaviour
                 try
                 {
                     unselectedItem = raycastResults[1].gameObject.GetComponent<ItemSlot>();
-                    ItemSwap();
+                    if (!IsShopSlot(unselectedItem)) ItemSwap();
                 }
                 catch { }
                 raycastResults.Clear();
@@ -126,5 +126,12 @@ public class ItemMoving : MonoBehaviour
         _unselectedItem.SetColor(_selectedItem.ImageAlpha);
         _unselectedItem.SetSlotAmount(_selectedItem.itemAmount);
         _unselectedItem.GetComponentsInChildren<Image>()[1].sprite = _selectedItem.GetComponentsInChildren<Image>()[1].sprite;
+    }
+    bool IsShopSlot(ItemSlot _itemSlot)
+    {
+        if (_itemSlot.slotType == ItemSlot.SlotType.Shop)
+            return true;
+        else
+            return false;
     }
 }

@@ -19,6 +19,7 @@ MonoBehaviour:
   itemInfo: "\uD480\uC744 \uBCA8 \uC218 \uC788\uB294 \uB0AB\uC774\uB2E4."
   buyPrice: 100
   sellPrice: 50
+  bundleSize: 1
   toolType: 3
   damage: 3
   moveSpd: 0
