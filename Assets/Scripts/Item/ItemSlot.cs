@@ -30,10 +30,11 @@ public class ItemSlot : MonoBehaviour
 
     public void AddItem(Item _item, int _amount = 1)
     {
+        if (_amount < 1) return;
         this.item = _item;
         itemAmount += _amount;
         itemImage.sprite = item.itemImage;
-        if (item.itemType != Item.ItemType.Tool && item.itemType != Item.ItemType.Weapon)
+        if (!Inventory.instance.IsEquipment(item))
         {
             itemAmountImage.SetActive(true);
             itemAmountText.text = itemAmount.ToString();
@@ -46,16 +47,24 @@ public class ItemSlot : MonoBehaviour
         SetColor(1);
     }
 
-    public void SetSlotAmount(int amount)
+    public void SetSlotAmount(int _amount)
     {
-        itemAmount = amount;
+        itemAmount = _amount;
         itemAmountText.text = itemAmount.ToString();
         if (itemAmount <= 0)
         {
             ClearSlot();
-        }else
+        }
+        else
         {
             SetColor(1);
+            if (!Inventory.instance.IsEquipment(item))
+            {
+                itemAmountImage.SetActive(true);
+            }else
+            {
+                itemAmountImage.SetActive(false);
+            }
         }
     }
 

@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory instance;
     [SerializeField] GameObject InventoryBackground;
     [SerializeField] GameObject InventorySlotsParent;
     public Text goldText;
     ItemSlot[] slots;
     RectTransform rectTransform;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         rectTransform = InventoryBackground.GetComponent<RectTransform>();
@@ -41,20 +46,20 @@ public class Inventory : MonoBehaviour
         {
             for (int i = 0; i < slots.Length; i++)
             {
-                if (slots[i].item != null)
+                if (slots[i].item != null && slots[i].item.itemName == _item.itemName && slots[i].itemAmount < _item.bundleSize)
                 {
-                    if (slots[i].item.itemName == _item.itemName && slots[i].itemAmount < _item.bundleSize)
+                    // 슬롯에 있는 아이템이 집어넣으려는 아이템과 같고 번들사이즈보다 적을 때
+                    if (slots[i].itemAmount + amountTmp <= _item.bundleSize)
                     {
-                        if (slots[i].item.bundleSize < _amount + slots[i].itemAmount)
-                        {
-                            amountTmp -= slots[i].item.bundleSize - slots[i].itemAmount;
-                            break;
-                        }
-                        else
-                        {
-                            slots[i].AddItem(_item, _amount);
-                            return;
-                        }
+                        // 넣으려는 아이템의 수량을 더해도 번들사이즈보다 적을 때
+                        slots[i].SetSlotAmount(slots[i].itemAmount + amountTmp);
+                        return;
+                    }
+                    else
+                    {
+                        // 넣으려는 아이템의 수량을 더하면 번들사이즈보다 클 
+                        amountTmp -= _item.bundleSize - slots[i].itemAmount;
+                        slots[i].SetSlotAmount(_item.bundleSize);
                     }
                 }
             }
@@ -95,12 +100,23 @@ public class Inventory : MonoBehaviour
         int itemNum = 0;
         for(int i=0;i<slots.Length;i++)
         {
-            if (slots[i].item == null) itemNum += _item.bundleSize;
+            if (slots[i].item == null)
+            {
+                itemNum += _item.bundleSize;
+                continue;
+            }
             if (slots[i].item.itemName == _item.itemName)
             {
                 itemNum += _item.bundleSize - slots[i].itemAmount;
             }
         }
         return itemNum;
+    }
+    public bool IsEquipment(Item _item)
+    {
+        if (_item.itemType == Item.ItemType.Tool) return true;
+        if (_item.itemType == Item.ItemType.Weapon) return true;
+        if (_item.itemType == Item.ItemType.Shoes) return true;
+        return false;
     }
 }

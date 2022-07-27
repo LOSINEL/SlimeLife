@@ -114,7 +114,15 @@ public class ItemMoving : MonoBehaviour
             }
             else
             {
-                Debug.Log("아이템 변경 불가 - 아이템 타입이 서로 다름");
+                if (selectedItem.slotType == ItemSlot.SlotType.Inventory && unselectedItem.slotType == ItemSlot.SlotType.Inventory)
+                {
+                    ItemOptionInput(selectedItem, unselectedItem);
+                    ItemOptionInput(tmpItem, selectedItem);
+                }
+                else
+                {
+                    AlertManager.instance.CreateAlertMessage("아이템 종류가 서로 다릅니다.");
+                }
             }
         }
         Destroy(tmpItem.gameObject);
