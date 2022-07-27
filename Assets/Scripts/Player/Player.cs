@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -8,19 +9,23 @@ public class Player : MonoBehaviour
     public float mvspd_ = 2.5f, mvspd = 2.5f;
     public float mvsnd = 1f, atkspd = 1f;
     public int jumpPower = 14;
-    [SerializeField] bool move_able = true;
-    [SerializeField] bool jump_able = true;
-    [SerializeField] bool mvsnd_able = true;
-    [SerializeField] bool attack_able = true;
-    [SerializeField] int gold = 0;
+    bool move_able = true;
+    bool jump_able = true;
+    bool mvsnd_able = true;
+    bool attack_able = true;
+    int gold = 0;
     public GameObject tool, weapon;
     bool hitable = true;
     bool isMoving = false, grounded = false, isAttacking = false;
     float gravityScale = 10f;
-    [SerializeField] GameObject mainCamera;
     int weaponDamage = 1;
-    [SerializeField] int toolDamage = 1;
+    int toolDamage = 1;
+    float nowHp = 100f, nowSp = 100f;
+    float maxHp = 100f, maxSp = 100f;
     Rigidbody rigid;
+    [SerializeField] GameObject mainCamera;
+    [SerializeField] GameObject hpBar;
+    [SerializeField] GameObject spBar;
     public int Gold { get { return gold; } }
     public bool Grounded { set { grounded = value; } }
     public bool IsAttacking { get { return isAttacking; } }
@@ -125,6 +130,44 @@ public class Player : MonoBehaviour
     public void AddGold(int num)
     {
         gold += num;
+    }
+
+    public void AddHp(float _hp)
+    {
+        nowHp += _hp;
+        if (nowHp > maxHp)
+        {
+            nowHp = maxHp;
+        }
+        if (nowHp <= 0)
+        {
+            nowHp = 0;
+            PlayerDead();
+        }
+    }
+
+    public void AddSp(float _sp)
+    {
+        nowSp += _sp;
+        if (nowSp > maxSp)
+        {
+            nowSp = maxSp;
+        }
+        if (nowSp <= 0)
+        {
+            nowSp = 0;
+        }
+    }
+
+    public void RefreshHpSp()
+    {
+        hpBar.GetComponent<Image>().fillAmount = nowHp / maxHp;
+        spBar.GetComponent<Image>().fillAmount = nowSp / maxSp;
+    }
+
+    public void PlayerDead()
+    {
+        AlertManager.instance.CreateAlertMessage("당신은 사망했습니다.");
     }
     void Sprint()
     {
