@@ -60,12 +60,14 @@
     <Compile Include="Assets\Scripts\Item\ItemMoving.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcScriptManager.cs" />
     <Compile Include="Assets\Scripts\UI\ShopSlot.cs" />
+    <Compile Include="Assets\Scripts\UI\AlertManager.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\UI\Inventory.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcManager.cs" />
     <Compile Include="Assets\Scripts\Object\Gatherable.cs" />
     <Compile Include="Assets\Scripts\UI\HpBar.cs" />
     <Compile Include="Assets\Scripts\UI\BuyingWindow.cs" />
+    <Compile Include="Assets\Scripts\UI\AlertMessage.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcMerchant.cs" />
     <Compile Include="Assets\Scripts\Item\ItemSlot.cs" />
     <Compile Include="Assets\Scripts\Item\ItemPickUp.cs" />
@@ -83,8 +85,7 @@
     <Compile Include="Assets\Scripts\Npc\NpcNormal.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcTouch.cs" />
     <Compile Include="Assets\Scripts\Item\Item.cs" />
-    <Compile Include="Assets\Scripts\UI\AlertManager.cs" />
-    <Compile Include="Assets\Scripts\UI\AlertMessage.cs" />
+    <Compile Include="Assets\Scripts\UI\ParameterWarning.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Kawaii Slime\Shader\Unity-chan Shader Ver 1.2.1\readme.txt" />

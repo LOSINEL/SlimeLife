@@ -26,6 +26,10 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject mainCamera;
     [SerializeField] GameObject hpBar;
     [SerializeField] GameObject spBar;
+    public float NowHp { get { return nowHp; } }
+    public float NowSp { get { return nowSp; } }
+    public float MaxHp { get { return maxHp; } }
+    public float MaxSp { get { return maxSp; } }
     public int Gold { get { return gold; } }
     public bool Grounded { set { grounded = value; } }
     public bool IsAttacking { get { return isAttacking; } }
@@ -42,6 +46,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        RefreshHpSp();
         if (jump_able)
         {
             Jump();
@@ -161,8 +166,20 @@ public class Player : MonoBehaviour
 
     public void RefreshHpSp()
     {
+        RegenHp(0f);
+        RegenSp(0f);
         hpBar.GetComponent<Image>().fillAmount = nowHp / maxHp;
         spBar.GetComponent<Image>().fillAmount = nowSp / maxSp;
+    }
+
+    public void RegenHp(float _hpRegen)
+    {
+        AddHp(_hpRegen * Time.deltaTime);
+    }
+
+    public void RegenSp(float _spRegen)
+    {
+        AddSp(_spRegen * Time.deltaTime);
     }
 
     public void PlayerDead()
