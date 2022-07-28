@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Npc\NpcTouch.cs" />
     <Compile Include="Assets\Scripts\Item\Item.cs" />
     <Compile Include="Assets\Scripts\UI\ParameterWarning.cs" />
+    <Compile Include="Assets\Scripts\UI\StatManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Kawaii Slime\Shader\Unity-chan Shader Ver 1.2.1\readme.txt" />

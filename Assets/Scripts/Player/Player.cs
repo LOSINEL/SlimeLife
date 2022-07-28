@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    const int levelUpStatPoint = 3;
+    const int levelUpHp = 4;
+    const int levelUpSp = 4;
     public static Player instance;
     public float mvspd_ = 2.5f, mvspd = 2.5f;
     public float mvsnd = 1f, atkspd = 1f;
@@ -22,10 +25,26 @@ public class Player : MonoBehaviour
     int toolDamage = 1;
     float nowHp = 100f, nowSp = 100f;
     float maxHp = 100f, maxSp = 100f;
+    float hpRegen = 1f, spRegen = 1f;
+    int statStr = 0, statDex = 0, statVit = 0, statLuk = 0, statPoint = 0, statPointAll = 0, level = 1;
+    int bonusStatStr = 0, bonusStatDex = 0, bonusStatVit = 0, bonusStatLuk = 0;
     Rigidbody rigid;
     [SerializeField] GameObject mainCamera;
     [SerializeField] GameObject hpBar;
     [SerializeField] GameObject spBar;
+    public enum StatType
+    { STR, DEX, VIT, LUK }
+    public int Level { get { return level; } }
+    public int StatPointAll { get { return statPointAll; } }
+    public int StatPoint { get { return statPoint; } }
+    public int StatStr { get { return statStr; } }
+    public int StatDex { get { return statDex; } }
+    public int StatVit { get { return statVit; } }
+    public int StatLuk { get { return statLuk; } }
+    public int BonusStatStr { get { return bonusStatStr; } }
+    public int BonusStatDex { get { return bonusStatDex; } }
+    public int BonusStatVit { get { return bonusStatVit; } }
+    public int BOnusStatLuk { get { return bonusStatLuk; } }
     public float NowHp { get { return nowHp; } }
     public float NowSp { get { return nowSp; } }
     public float MaxHp { get { return maxHp; } }
@@ -43,6 +62,10 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigid = gameObject.GetComponent<Rigidbody>();
+        for (int i = 0; i < 100; i++)
+        {
+            LevelUp();
+        }
     }
     void Update()
     {
@@ -51,13 +74,13 @@ public class Player : MonoBehaviour
         {
             Jump();
         }
-        
+
         if (move_able && grounded)
         {
             Sprint();
             Move();
         }
-        if(isMoving)
+        if (isMoving)
         {
             if (mvsnd_able)
             {
@@ -103,7 +126,7 @@ public class Player : MonoBehaviour
     }
     IEnumerator AttackCheck()
     {
-        yield return new WaitForSeconds(tool.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(tool.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + 0.01f);
         isAttacking = false;
         move_able = true;
         tool.SetActive(false);
@@ -120,10 +143,10 @@ public class Player : MonoBehaviour
     }
     public void SetDamage(int dmg, bool isWeapon)
     {
-        if(isWeapon)
+        if (isWeapon)
         {
             weaponDamage = dmg;
-        }else
+        } else
         {
             toolDamage = dmg;
         }
@@ -164,10 +187,63 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void AddStat(StatType _statType, int num)
+    {
+        if (num > statPoint)
+        {
+            AlertManager.instance.CreateAlertMessage("스탯 포인트가 부족합니다.");
+            return;
+        }
+        switch (_statType)
+        {
+            case StatType.STR:
+                statStr += num;
+                statPoint -= num;
+                break;
+            case StatType.DEX:
+                statDex += num;
+                statPoint -= num;
+                break;
+            case StatType.VIT:
+                statVit += num;
+                statPoint -= num;
+                break;
+            case StatType.LUK:
+                statLuk += num;
+                statPoint -= num;
+                break;
+        }
+    }
+
+    public void AddStatPoint(int num)
+    {
+        statPoint += num;
+    }
+
+    public void SetStatPoint(int num)
+    {
+        statPoint = num;
+    }
+
+    public void LevelUp()
+    {
+        statPoint += levelUpStatPoint;
+        statPointAll += levelUpStatPoint;
+        maxHp += levelUpHp;
+        maxSp += levelUpSp;
+        RecoverAll();
+    }
+
+    public void RecoverAll()
+    {
+        nowHp = maxHp;
+        nowSp = maxSp;
+    }
+
     public void RefreshHpSp()
     {
-        RegenHp(0f);
-        RegenSp(0f);
+        RegenHp(hpRegen);
+        RegenSp(spRegen);
         hpBar.GetComponent<Image>().fillAmount = nowHp / maxHp;
         spBar.GetComponent<Image>().fillAmount = nowSp / maxSp;
     }
