@@ -12,6 +12,7 @@ public class ItemMoving : MonoBehaviour
     ItemSlot unselectedItem;
     public GameObject holdingItemImage;
     public GameObject droppingItemWindow;
+    public GameObject sellingItemWindow;
     bool isHoldItem = false;
 
     void Update()
@@ -50,6 +51,17 @@ public class ItemMoving : MonoBehaviour
             EventSystem.current.RaycastAll(pointer, raycastResults);
             if (raycastResults.Count > 0)
             {
+                if (raycastResults[0].gameObject.tag.Equals("Shop") || raycastResults[1].gameObject.tag.Equals("Shop"))
+                {
+                    if(!selectedItem.item.CanSell)
+                    {
+                        AlertManager.instance.CreateAlertMessage("판매할 수 없는 아이템입니다.");
+                        raycastResults.Clear();
+                        return;
+                    }
+                    sellingItemWindow.SetActive(true);
+                    sellingItemWindow.GetComponent<SellingWindow>().SetSellingWindow(selectedItem.item);
+                }
                 try
                 {
                     unselectedItem = raycastResults[1].gameObject.GetComponent<ItemSlot>();
@@ -61,6 +73,7 @@ public class ItemMoving : MonoBehaviour
             else
             {
                 droppingItemWindow.SetActive(true);
+                droppingItemWindow.GetComponent<DroppingWindow>().SetDroppingWindow(selectedItem.item);
             }
         }
     }
@@ -83,14 +96,14 @@ public class ItemMoving : MonoBehaviour
                     break;
                 case ItemSlot.SlotType.Weapon:
                 case ItemSlot.SlotType.Shoes:
-                    if (selectedItem.item.itemType.ToString() == unselectedItem.slotType.ToString())
+                    if (selectedItem.item.ItemType.ToString() == unselectedItem.slotType.ToString())
                     {
                         ItemOptionInput(selectedItem, unselectedItem);
                         ItemOptionInput(tmpItem, selectedItem);
                     }
                     break;
                 case ItemSlot.SlotType.Tool:
-                    if (selectedItem.item.itemType.ToString() == unselectedItem.slotType.ToString())
+                    if (selectedItem.item.ItemType.ToString() == unselectedItem.slotType.ToString())
                     {
                         ItemOptionInput(selectedItem, unselectedItem);
                         ItemOptionInput(tmpItem, selectedItem);
@@ -102,7 +115,7 @@ public class ItemMoving : MonoBehaviour
         }
         else
         {
-            if (selectedItem.item.itemType == unselectedItem.item.itemType)
+            if (selectedItem.item.ItemType == unselectedItem.item.ItemType)
             {
                 ItemOptionInput(selectedItem, unselectedItem);
                 ItemOptionInput(tmpItem, selectedItem);

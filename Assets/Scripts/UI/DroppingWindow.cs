@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuyingWindow : MonoBehaviour
+public class DroppingWindow : MonoBehaviour
 {
+    const float randRange = 1.5f;
+    const float dropHeight = 1f;
     public Text itemNameText;
-    public Text itemPriceText;
     public Text itemInfoText;
     public Text itemAmountText;
     public Image itemImage;
     public Item item;
-    int itemPrice;
     public GameObject inventory;
     public Slider itemAmountSlider;
     int itemAmount = 1;
@@ -21,27 +21,25 @@ public class BuyingWindow : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            BuyItemButtonSelected();
+            TryDropItem();
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            CloseBuyingWindowSelected();
+            CloseDroppingWindowSelected();
         }
     }
-    public void SetBuyingWindow(Item _item)
+    public void SetDroppingWindow(Item _item)
     {
         item = _item;
         itemNameText.text = _item.ItemName;
-        itemPriceText.text = _item.BuyPrice.ToString() + "G";
         itemInfoText.text = _item.ItemInfo;
         itemImage.sprite = _item.ItemImage;
-        itemPrice = _item.BuyPrice;
         if (!inventory.GetComponent<Inventory>().IsEquipment(_item))
         {
             itemAmountSlider.gameObject.SetActive(true);
-            itemAmountSlider.maxValue = _item.BundleSize;
+            itemAmountSlider.maxValue = inventory.GetComponent<Inventory>().HowManyItemIHave(_item);
         }
         else
         {
@@ -50,39 +48,28 @@ public class BuyingWindow : MonoBehaviour
         ValueChangeCheck();
     }
 
-    public void InitBuyingWindow()
+    public void InitDroppingWindow()
     {
         item = null;
         itemNameText.text = "item name";
-        itemPriceText.text = "item price";
         itemInfoText.text = "item info";
         itemImage.sprite = null;
-        itemPrice = 0;
         itemAmountSlider.value = itemAmountSlider.minValue;
     }
-    public void BuyItemButtonSelected()
+    public void TryDropItem()
     {
-        if (Player.instance.Gold >= itemAmount * itemPrice)
+        inventory.GetComponent<Inventory>().DeleteItem(item, itemAmount);
+        for(int i=0;i<itemAmount;i++)
         {
-            if (inventory.GetComponent<Inventory>().HowManyItemCanPutIn(item) >= itemAmount)
-            {
-                Player.instance.AddGold(-1 * itemPrice * itemAmount);
-                inventory.GetComponent<Inventory>().AcquireItem(item, itemAmount);
-                CloseBuyingWindowSelected();
-            }
-            else
-            {
-                AlertManager.instance.CreateAlertMessage("인벤토리 슬롯이 부족합니다.");
-            }
+            Vector3 randomPosition = new Vector3(Random.Range(-1 * randRange, randRange), dropHeight, Random.Range(-1 * randRange, randRange));
+            Instantiate(item.ItemPrefab, Player.instance.transform.position + randomPosition, new Quaternion(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)));
         }
-        else
-        {
-            AlertManager.instance.CreateAlertMessage("골드가 부족합니다.");
-        }
+        InitDroppingWindow();
+        gameObject.SetActive(false);
     }
-    public void CloseBuyingWindowSelected()
+    public void CloseDroppingWindowSelected()
     {
-        InitBuyingWindow();
+        InitDroppingWindow();
         gameObject.SetActive(false);
     }
 

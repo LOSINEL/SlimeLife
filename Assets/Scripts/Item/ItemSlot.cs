@@ -33,7 +33,7 @@ public class ItemSlot : MonoBehaviour
         if (_amount < 1) return;
         this.item = _item;
         itemAmount += _amount;
-        itemImage.sprite = item.itemImage;
+        itemImage.sprite = item.ItemImage;
         if (!Inventory.instance.IsEquipment(item))
         {
             itemAmountImage.SetActive(true);

@@ -105,7 +105,7 @@ public class Hand : MonoBehaviour
         pushButton.SetActive(true);
         if (minDistanceObject.tag.Equals("Item"))
         {
-            itemInfoText.GetComponent<Text>().text = minDistanceObject.GetComponent<ItemPickUp>().item.itemName + "\n" + minDistanceObject.GetComponent<ItemPickUp>().item.itemInfo;
+            itemInfoText.GetComponent<Text>().text = minDistanceObject.GetComponent<ItemPickUp>().item.ItemName + "\n" + minDistanceObject.GetComponent<ItemPickUp>().item.ItemInfo;
         }
         else
         {

@@ -13,9 +13,9 @@ public class ShopSlot : MonoBehaviour
     private void Start()
     {
         item = gameObject.GetComponentInChildren<ItemSlot>().item;
-        itemNameText.text = item.itemName;
-        itemPriceText.text = item.buyPrice.ToString() + "G";
-        itemImage.sprite = item.itemImage;
+        itemNameText.text = item.ItemName;
+        itemPriceText.text = item.BuyPrice.ToString() + "G";
+        itemImage.sprite = item.ItemImage;
     }
     public void BuyButtonSelected()
     {

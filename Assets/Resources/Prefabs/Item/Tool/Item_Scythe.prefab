@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3074134621142519025}
   - component: {fileID: 5090531188110265854}
   - component: {fileID: 8627272110714599876}
-  - component: {fileID: 4670266224883886092}
   - component: {fileID: 4670266224883886093}
+  - component: {fileID: 1077232608883159343}
   m_Layer: 0
   m_Name: Item_Scythe
   m_TagString: Item
@@ -99,20 +99,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 2bb4c27a1e184fd46ae6efee5c35c7ea, type: 2}
---- !u!64 &4670266224883886092
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4670266224883886095}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -6002413127027354608, guid: ccdcec6453acdfa418c0b654494a59e3, type: 3}
 --- !u!54 &4670266224883886093
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,6 +112,19 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
+--- !u!65 &1077232608883159343
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670266224883886095}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 1.9000002, z: 0.71585196}
+  m_Center: {x: 0.019259797, y: 0.9500001, z: -0.33297727}

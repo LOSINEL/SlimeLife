@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3074134621142519025}
   - component: {fileID: 5090531188110265854}
   - component: {fileID: 8627272110714599876}
-  - component: {fileID: 4670266224883886092}
   - component: {fileID: 4670266224883886093}
+  - component: {fileID: 4081571806135677373}
   m_Layer: 0
   m_Name: Item_Shovel
   m_TagString: Item
@@ -99,20 +99,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 9da3bdb8fccd1844a983ee4b5cb8afe1, type: 2}
---- !u!64 &4670266224883886092
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4670266224883886095}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5570736390010699934, guid: 19b356156119e734fb7a25ff0020c0b9, type: 3}
 --- !u!54 &4670266224883886093
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,6 +112,19 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
+--- !u!65 &4081571806135677373
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670266224883886095}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 1.6799929, z: 0.3384094}
+  m_Center: {x: 0.040399555, y: 0.83999646, z: 0}

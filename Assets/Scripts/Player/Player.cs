@@ -69,20 +69,9 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            LevelUp();
-        }
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            statStr++;
-            statDex++;
-            statVit++;
-            statLuk++;
-            weaponDamage++;
-            toolDamage++;
-            nowHp -= 3;
-            nowSp -= 5;
+            AddGold(10000);
         }
         RefreshHpSp();
         if (jump_able)
@@ -90,7 +79,7 @@ public class Player : MonoBehaviour
             Jump();
         }
 
-        if (move_able && grounded)
+        if (move_able)
         {
             Sprint();
             Move();
@@ -134,10 +123,19 @@ public class Player : MonoBehaviour
     }
     void LateUpdate()
     {
-        rigid.velocity += new Vector3(0, -1, 0) * gravityScale * Time.deltaTime;
-        if (!isMoving && grounded) rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+        if(grounded) // 바닥에 닿아있을 때
+        {
+            rigid.velocity = new Vector3(rigid.velocity.x, -1.25f, rigid.velocity.z);
+        }
+        else // 점프 했을 때
+        {
+            rigid.velocity += new Vector3(0, -1, 0) * gravityScale * Time.deltaTime;
+        }
         isMoving = false;
-        mainCamera.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 10.5f, gameObject.transform.position.z - 8.5f);
+    }
+    private void FixedUpdate()
+    {
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, gameObject.transform.position + new Vector3(0, 10.5f, -8.5f), Time.deltaTime * 3f);
     }
     IEnumerator AttackCheck()
     {
@@ -305,28 +303,28 @@ public class Player : MonoBehaviour
         // 8방향 이동
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
         {
-            rigid.velocity = new Vector3(-1, 0, 1).normalized * mvSpd;
+            rigid.velocity = new Vector3(-1, 0, 1).normalized * mvSpd + new Vector3(0, rigid.velocity.y, 0);
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, -45, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
         {
-            rigid.velocity = new Vector3(1, 0, 1).normalized * mvSpd;
+            rigid.velocity = new Vector3(1, 0, 1).normalized * mvSpd + new Vector3(0, rigid.velocity.y, 0);
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 45, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
         {
-            rigid.velocity = new Vector3(-1, 0, -1).normalized * mvSpd;
+            rigid.velocity = new Vector3(-1, 0, -1).normalized * mvSpd + new Vector3(0, rigid.velocity.y, 0);
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, -135, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
         {
-            rigid.velocity = new Vector3(1, 0, -1).normalized * mvSpd;
+            rigid.velocity = new Vector3(1, 0, -1).normalized * mvSpd + new Vector3(0, rigid.velocity.y, 0);
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 135, 0));
             isMoving = true;
             return;
@@ -334,27 +332,27 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            rigid.velocity = new Vector3(0, 0, 1) * mvSpd;
+            rigid.velocity = new Vector3(0, 0, 1) * mvSpd + new Vector3(0, rigid.velocity.y, 0);
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            rigid.velocity = new Vector3(0, 0, -1) * mvSpd;
+            rigid.velocity = new Vector3(0, 0, -1) * mvSpd + new Vector3(0, rigid.velocity.y, 0);
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
             isMoving = true;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rigid.velocity = new Vector3(-1, 0, 0) * mvSpd;
+            rigid.velocity = new Vector3(-1, 0, 0) * mvSpd + new Vector3(0, rigid.velocity.y, 0);
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            rigid.velocity = new Vector3(1, 0, 0) * mvSpd;
+            rigid.velocity = new Vector3(1, 0, 0) * mvSpd + new Vector3(0, rigid.velocity.y, 0);
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
             isMoving = true;
         }
