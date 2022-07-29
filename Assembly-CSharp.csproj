@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\UI\ShopSlot.cs" />
     <Compile Include="Assets\Scripts\UI\AlertManager.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\UI\ParameterWarning.cs" />
     <Compile Include="Assets\Scripts\UI\Inventory.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcManager.cs" />
     <Compile Include="Assets\Scripts\Object\Gatherable.cs" />
@@ -85,7 +86,6 @@
     <Compile Include="Assets\Scripts\Npc\NpcNormal.cs" />
     <Compile Include="Assets\Scripts\Npc\NpcTouch.cs" />
     <Compile Include="Assets\Scripts\Item\Item.cs" />
-    <Compile Include="Assets\Scripts\UI\ParameterWarning.cs" />
     <Compile Include="Assets\Scripts\UI\StatManager.cs" />
   </ItemGroup>
   <ItemGroup>

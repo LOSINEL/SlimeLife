@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     const int levelUpHp = 4;
     const int levelUpSp = 4;
     public static Player instance;
-    public float mvspd_ = 2.5f, mvspd = 2.5f;
-    public float mvsnd = 1f, atkspd = 1f;
+    float mvSpd_ = 2.5f, mvSpd = 2.5f;
+    float mvSnd = 1f, atkSpd = 1f;
     public int jumpPower = 14;
     bool move_able = true;
     bool jump_able = true;
@@ -34,6 +34,10 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject spBar;
     public enum StatType
     { STR, DEX, VIT, LUK }
+    public float HpRegen { get { return hpRegen; } }
+    public float SpRegen { get { return spRegen; } }
+    public float MvSpd { get { return mvSpd; } }
+    public float AtkSpd { get { return atkSpd; } }
     public int Level { get { return level; } }
     public int StatPointAll { get { return statPointAll; } }
     public int StatPoint { get { return statPoint; } }
@@ -44,7 +48,7 @@ public class Player : MonoBehaviour
     public int BonusStatStr { get { return bonusStatStr; } }
     public int BonusStatDex { get { return bonusStatDex; } }
     public int BonusStatVit { get { return bonusStatVit; } }
-    public int BOnusStatLuk { get { return bonusStatLuk; } }
+    public int BonusStatLuk { get { return bonusStatLuk; } }
     public float NowHp { get { return nowHp; } }
     public float NowSp { get { return nowSp; } }
     public float MaxHp { get { return maxHp; } }
@@ -62,13 +66,24 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigid = gameObject.GetComponent<Rigidbody>();
-        for (int i = 0; i < 100; i++)
-        {
-            LevelUp();
-        }
     }
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            LevelUp();
+        }
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            statStr++;
+            statDex++;
+            statVit++;
+            statLuk++;
+            weaponDamage++;
+            toolDamage++;
+            nowHp -= 3;
+            nowSp -= 5;
+        }
         RefreshHpSp();
         if (jump_able)
         {
@@ -133,12 +148,12 @@ public class Player : MonoBehaviour
     }
     IEnumerator AttackCoolTime()
     {
-        yield return new WaitForSeconds(atkspd);
+        yield return new WaitForSeconds(atkSpd);
         attack_able = true;
     }
     IEnumerator MoveSound()
     {
-        yield return new WaitForSeconds(Random.Range(mvsnd * 0.5f, mvsnd * 1.2f));
+        yield return new WaitForSeconds(Random.Range(mvSnd * 0.5f, mvSnd * 1.2f));
         mvsnd_able = true;
     }
     public void SetDamage(int dmg, bool isWeapon)
@@ -267,11 +282,11 @@ public class Player : MonoBehaviour
         // 달리기
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            mvspd = mvspd_ * 1.5f;
+            mvSpd = mvSpd_ * 1.5f;
         }
         else
         {
-            mvspd = mvspd_;
+            mvSpd = mvSpd_;
         }
     }
     void Jump()
@@ -290,28 +305,28 @@ public class Player : MonoBehaviour
         // 8방향 이동
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
         {
-            rigid.velocity = new Vector3(-1, 0, 1).normalized * mvspd;
+            rigid.velocity = new Vector3(-1, 0, 1).normalized * mvSpd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, -45, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
         {
-            rigid.velocity = new Vector3(1, 0, 1).normalized * mvspd;
+            rigid.velocity = new Vector3(1, 0, 1).normalized * mvSpd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 45, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
         {
-            rigid.velocity = new Vector3(-1, 0, -1).normalized * mvspd;
+            rigid.velocity = new Vector3(-1, 0, -1).normalized * mvSpd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, -135, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
         {
-            rigid.velocity = new Vector3(1, 0, -1).normalized * mvspd;
+            rigid.velocity = new Vector3(1, 0, -1).normalized * mvSpd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 135, 0));
             isMoving = true;
             return;
@@ -319,27 +334,27 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            rigid.velocity = new Vector3(0, 0, 1) * mvspd;
+            rigid.velocity = new Vector3(0, 0, 1) * mvSpd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            rigid.velocity = new Vector3(0, 0, -1) * mvspd;
+            rigid.velocity = new Vector3(0, 0, -1) * mvSpd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
             isMoving = true;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rigid.velocity = new Vector3(-1, 0, 0) * mvspd;
+            rigid.velocity = new Vector3(-1, 0, 0) * mvSpd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
             isMoving = true;
             return;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            rigid.velocity = new Vector3(1, 0, 0) * mvspd;
+            rigid.velocity = new Vector3(1, 0, 0) * mvSpd;
             rigid.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
             isMoving = true;
         }

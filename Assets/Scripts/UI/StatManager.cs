@@ -7,23 +7,56 @@ using UnityEngine.EventSystems;
 public class StatManager : MonoBehaviour
 {
     public GameObject statDetailWindow;
-    [SerializeField] Text statStrText;
-    [SerializeField] Text statDexText;
-    [SerializeField] Text statVitText;
-    [SerializeField] Text statLukText;
-    [SerializeField] Text statPointText;
+    [SerializeField] Text statStrText, statDexText, statVitText, statLukText, statPointText;
+    [SerializeField] Text detailStatStrText, detailStatDexText, detailStatVitText, detailStatLukText;
+    [SerializeField] Text detailHpText, detailSpText, detailHpRegenText, detailSpRegenText;
+    [SerializeField] Text detailAtkSpdText, detailMoveSpeedText;
+    [SerializeField] Text detailWeaponDamageText, detailToolDamageText;
     private void Update()
     {
         RefreshStatText();
+        RefreshStatDetailText();
+        RefreshHpSpDetailText();
+        RefreshSpeedDetailText();
+        RefreshDamageDetailText();
     }
     void RefreshStatText()
     {
-        statStrText.text = "STR : " + (Player.instance.StatStr + Player.instance.BonusStatStr).ToString();
-        statDexText.text = "DEX : " + (Player.instance.StatDex + Player.instance.BonusStatDex).ToString();
-        statVitText.text = "  VIT : " + (Player.instance.StatVit + Player.instance.BonusStatVit).ToString();
-        statLukText.text = "LUK : " + (Player.instance.StatLuk + Player.instance.BOnusStatLuk).ToString();
-        statPointText.text = "Stat Point : " + Player.instance.StatPoint.ToString();
+        statStrText.text = "근력 : " + (Player.instance.StatStr + Player.instance.BonusStatStr).ToString();
+        statDexText.text = "민첩 : " + (Player.instance.StatDex + Player.instance.BonusStatDex).ToString();
+        statVitText.text = "체력 : " + (Player.instance.StatVit + Player.instance.BonusStatVit).ToString();
+        statLukText.text = "행운 : " + (Player.instance.StatLuk + Player.instance.BonusStatLuk).ToString();
+        statPointText.text = "스탯 포인트 : " + Player.instance.StatPoint.ToString();
     }
+
+    void RefreshStatDetailText()
+    {
+        detailStatStrText.text = "근력 : " + Player.instance.StatStr.ToString() + "(+" + Player.instance.BonusStatStr.ToString() + ")";
+        detailStatDexText.text = "민첩 : " + Player.instance.StatDex.ToString() + "(+" + Player.instance.BonusStatDex.ToString() + ")";
+        detailStatVitText.text = "체력 : " + Player.instance.StatVit.ToString() + "(+" + Player.instance.BonusStatVit.ToString() + ")";
+        detailStatLukText.text = "행운 : " + Player.instance.StatLuk.ToString() + "(+" + Player.instance.BonusStatLuk.ToString() + ")";
+    }
+
+    void RefreshHpSpDetailText()
+    {
+        detailHpText.text = "생명력 : " + ((int)Player.instance.NowHp).ToString() + "/" + ((int)Player.instance.MaxHp).ToString() + "(+" /*+((int)Player.instance.BonusHp).ToString()*/+ ")";
+        detailSpText.text = "스태미나 : " + ((int)Player.instance.NowSp).ToString() + "/" + ((int)Player.instance.MaxSp).ToString() + "(+" /*+((int)Player.instance.BonusSp).ToString()*/+ ")";
+        detailHpRegenText.text = "생명력 회복량 : " + ((int)Player.instance.HpRegen).ToString() + "(+" /*+((int)Player.instance.BonusHp).ToString()*/+ ")";
+        detailSpRegenText.text = "스태미나 회복량 : " + ((int)Player.instance.SpRegen).ToString() + "(+" /*+((int)Player.instance.BonusHp).ToString()*/+ ")";
+    }
+
+    void RefreshSpeedDetailText()
+    {
+        detailAtkSpdText.text = "공격 속도 : " + (Mathf.Round(Player.instance.AtkSpd * 100) / 100f).ToString();
+        detailMoveSpeedText.text = "이동 속도 : " + (Mathf.Round(Player.instance.MvSpd * 100) / 100f).ToString();
+    }
+
+    void RefreshDamageDetailText()
+    {
+        detailWeaponDamageText.text = "무기 공격력 : " + Player.instance.WeaponDamage.ToString();
+        detailToolDamageText.text = "도구 공격력 : " + Player.instance.ToolDamage.ToString();
+    }
+
     public void ResetStat()
     {
         Player.instance.AddStat(Player.StatType.STR, -1 * Player.instance.StatStr);
